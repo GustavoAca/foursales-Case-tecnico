@@ -4,13 +4,12 @@ import com.foursales.foursale_desafio.domain.core.domain.model.EntityAbstract;
 import com.foursales.foursale_desafio.domain.model.categoria.Subcategoria;
 import com.foursales.foursale_desafio.domain.model.pedido.Pedido;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -34,4 +33,8 @@ public class Produto extends EntityAbstract {
     @ManyToOne
     @JoinColumn(name = "pedido_id", nullable = false)
     private Pedido pedido;
+
+    @OneToOne
+    @JoinColumn(name = "subcategoria_id", unique = true)
+    private Subcategoria subcategoria;
 }

@@ -26,7 +26,7 @@ public abstract class EntityAbstract extends EntityCreatedAbstract {
 
     @Column(name = "modificado_por")
     @LastModifiedBy
-    private String modificado_por;
+    private String modificadoPor;
 
     @Access(AccessType.PROPERTY)
     public void setModifiedDate(LocalDateTime dataDeModificacao) {
@@ -35,6 +35,6 @@ public abstract class EntityAbstract extends EntityCreatedAbstract {
 
     @Access(AccessType.PROPERTY)
     public void setModifiedBy(String modificado_por) {
-        this.modificado_por = modificado_por;
+        this.modificadoPor = modificado_por;
     }
 }

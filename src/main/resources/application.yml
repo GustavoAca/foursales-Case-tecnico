@@ -33,6 +33,7 @@ spring:
     url: jdbc:mysql://localhost:3306/foursales?TimeZone=America/Sao_Paulo
     username: foursales
     password: 1234
+    driver-class-name: org.hibernate.dialect.MySQLDialect
 
 ---
 spring:
