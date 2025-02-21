@@ -1,6 +1,7 @@
 package com.foursales.foursale_desafio.domain.model.categoria;
 
 import com.foursales.foursale_desafio.domain.core.domain.model.EntityAbstract;
+import com.foursales.foursale_desafio.domain.model.produto.Produto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,4 +29,7 @@ public class Subcategoria extends EntityAbstract {
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
+
+    @OneToOne(mappedBy = "subcategoria", cascade = CascadeType.ALL)
+    private Produto produto;
 }
