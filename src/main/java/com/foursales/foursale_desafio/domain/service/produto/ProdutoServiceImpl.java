@@ -1,7 +1,6 @@
 package com.foursales.foursale_desafio.domain.service.produto;
 
 import com.foursales.foursale_desafio.domain.core.domain.service.BaseServiceImpl;
-import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoDto;
 import com.foursales.foursale_desafio.domain.mapper.produto.ProdutoMapper;
 import com.foursales.foursale_desafio.domain.model.produto.Produto;
 import com.foursales.foursale_desafio.domain.repository.ProdutoRepository;
@@ -17,10 +16,5 @@ public class ProdutoServiceImpl extends BaseServiceImpl<Produto, UUID, ProdutoRe
                                  ProdutoMapper produtoMapper) {
         super(repo);
         this.produtoMapper = produtoMapper;
-    }
-
-    @Override
-    public ProdutoDto atualizar(ProdutoDto produtoDto, UUID id) {
-        return null;
     }
 }
