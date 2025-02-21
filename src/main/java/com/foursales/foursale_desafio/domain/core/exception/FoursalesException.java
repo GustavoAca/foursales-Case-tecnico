@@ -1,4 +1,4 @@
-package com.foursales.foursale_desafio.exception;
+package com.foursales.foursale_desafio.domain.core.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

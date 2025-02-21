@@ -1,6 +1,6 @@
 package com.foursales.foursale_desafio.controller;
 
-import com.foursales.foursale_desafio.exception.FoursalesException;
+import com.foursales.foursale_desafio.domain.core.exception.FoursalesException;
 import org.hibernate.PersistentObjectException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

@@ -2,6 +2,7 @@ package com.foursales.foursale_desafio.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import com.foursales.foursale_desafio.domain.core.exception.FoursalesException;
 
 import java.io.Serializable;
 
