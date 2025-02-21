@@ -1,0 +1,25 @@
+name: Workflow
+
+on:
+  push:
+    branches:
+      - 'F*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Criar projeto e executar testes
+        run: mvn -B clean test
+
+      - name: Verificar dependências
+        run: mvn dependency:resolve
