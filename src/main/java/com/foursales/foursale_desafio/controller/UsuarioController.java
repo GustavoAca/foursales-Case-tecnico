@@ -22,7 +22,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public Boolean deletar(@PathVariable UUID id) {
-        return usuarioService.deletar(id);
+    public void deletar(@PathVariable UUID id) {
+        usuarioService.deletar(id);
     }
 }

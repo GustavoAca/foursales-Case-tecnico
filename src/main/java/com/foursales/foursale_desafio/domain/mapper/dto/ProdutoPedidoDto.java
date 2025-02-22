@@ -1,8 +1,6 @@
 package com.foursales.foursale_desafio.domain.mapper.dto;
 
 import com.foursales.foursale_desafio.domain.core.domain.model.dto.DtoAbstract;
-import com.foursales.foursale_desafio.domain.model.pedido.Status;
-import com.foursales.foursale_desafio.domain.model.usuario.Usuario;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -14,12 +12,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class PedidoDto extends DtoAbstract {
+public class ProdutoPedidoDto extends DtoAbstract {
 
     private UUID id;
+    private PedidoDto pedido;
+    private ProdutoDto produto;
+    private Integer quantidade;
     @Builder.Default
-    private BigDecimal valorTotal = BigDecimal.ZERO;
-    @Builder.Default
-    private Status status = Status.PENDENTE;
-    private Usuario usuario;
+    private BigDecimal preco = BigDecimal.ZERO;
 }

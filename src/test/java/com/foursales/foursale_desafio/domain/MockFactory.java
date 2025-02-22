@@ -6,12 +6,16 @@ import com.foursales.foursale_desafio.domain.model.categoria.Subcategoria;
 import com.foursales.foursale_desafio.domain.model.pagamento.Pagamento;
 import com.foursales.foursale_desafio.domain.model.pedido.Pedido;
 import com.foursales.foursale_desafio.domain.model.produto.Produto;
+import com.foursales.foursale_desafio.domain.model.produto.ProdutoPedido;
 import com.foursales.foursale_desafio.domain.model.usuario.Perfil;
 import com.foursales.foursale_desafio.domain.model.usuario.Usuario;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @Component
 public class MockFactory {
@@ -73,14 +77,29 @@ public class MockFactory {
     }
 
     public Pedido construirPedido(UUID id){
-        List<Produto> listaDeProdutos = construirListaDeProdutos();
         return Pedido.builder()
                 .id(Objects.nonNull(id) ? id : UUID.randomUUID())
-                .produtos(listaDeProdutos)
                 .usuario(construirUsuario())
-                .valorTotal(listaDeProdutos.stream()
-                        .map(Produto::getPreco)
-                        .reduce(BigDecimal.ZERO, BigDecimal::add))
+                .build();
+    }
+
+    public ProdutoPedido construirProdutoPedido(UUID id) {
+        return ProdutoPedido.builder()
+                .id(Objects.nonNull(id) ? id : UUID.randomUUID())
+                .quantidade(2)
+                .preco(BigDecimal.ONE)
+                .pedido(construirPedido(null))
+                .produto(construirProduto())
+                .build();
+    }
+
+    public ProdutoPedidoDto construirProdutoPedidoDto(UUID id) {
+        return ProdutoPedidoDto.builder()
+                .id(Objects.nonNull(id) ? id : UUID.randomUUID())
+                .quantidade(2)
+                .preco(BigDecimal.ONE)
+                .pedido(construirPedidoDto(null))
+                .produto(construirProdutoDto())
                 .build();
     }
 
@@ -103,14 +122,9 @@ public class MockFactory {
     }
 
     public PedidoDto construirPedidoDto(UUID id){
-        List<ProdutoDto> listaDeProdutosDto = construirListaDeProdutosDto();
         return PedidoDto.builder()
                 .id(Objects.nonNull(id) ? id : UUID.randomUUID())
-                .produtos(listaDeProdutosDto)
                 .usuario(construirUsuario())
-                .valorTotal(listaDeProdutosDto.stream()
-                        .map(ProdutoDto::getPreco)
-                        .reduce(BigDecimal.ZERO, BigDecimal::add))
                 .build();
     }
 

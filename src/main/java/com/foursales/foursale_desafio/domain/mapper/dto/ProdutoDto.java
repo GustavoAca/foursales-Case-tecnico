@@ -22,6 +22,5 @@ public class ProdutoDto extends DtoAbstract {
     private String nome;
     private BigDecimal preco;
     private Integer quantidadeEmEstoque;
-    private PedidoDto pedido;
     private SubcategoriaDto subcategoriaDto;
 }

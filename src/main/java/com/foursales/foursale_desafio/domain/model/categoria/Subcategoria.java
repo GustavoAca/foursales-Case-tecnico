@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -30,6 +32,6 @@ public class Subcategoria extends EntityAbstract {
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
-    @OneToOne(mappedBy = "subcategoria", cascade = CascadeType.ALL)
-    private Produto produto;
+    @OneToMany(mappedBy = "subcategoria")
+    private List<Produto> produtos = new LinkedList<>();
 }
