@@ -115,7 +115,7 @@ class ProdutoPedidoServiceImplTest extends FoursaleDesafioApplicationTests {
         }
 
         @Nested
-        class Quando_listar_produtos extends FoursaleDesafioApplicationTests {
+        class Quando_listar_produtos_pedido extends FoursaleDesafioApplicationTests {
             private ResponsePage<ProdutoPedidoDto> produtoPedidoDtos;
 
             @BeforeEach
@@ -130,7 +130,7 @@ class ProdutoPedidoServiceImplTest extends FoursaleDesafioApplicationTests {
         }
 
         @Nested
-        class Quando_buscar_por_produto_especifico extends FoursaleDesafioApplicationTests {
+        class Quando_buscar_por_produto_pedido_especifico extends FoursaleDesafioApplicationTests {
             private ProdutoPedidoDto produtoPedidoEncontrado;
 
             @BeforeEach
@@ -145,7 +145,7 @@ class ProdutoPedidoServiceImplTest extends FoursaleDesafioApplicationTests {
         }
 
         @Nested
-        class Quando_buscar_por_produto_pelo_pedido extends FoursaleDesafioApplicationTests {
+        class Quando_buscar_por_produto_pedido extends FoursaleDesafioApplicationTests {
             private ResponsePage<ProdutoPedidoDto> produtosPedidosEncontrado;
 
             @BeforeEach
