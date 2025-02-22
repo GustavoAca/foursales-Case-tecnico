@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ProdutoMapperTest extends FoursaleDesafioApplicationTests {
 
@@ -17,7 +18,7 @@ class ProdutoMapperTest extends FoursaleDesafioApplicationTests {
     private MockFactory mockFactory;
 
     @Autowired
-    private ProdutoMapper pedidprodutoMapperMapper;
+    private ProdutoMapper produtoMapper;
 
     @Nested
     class Dado_uma_entidade extends FoursaleDesafioApplicationTests {
@@ -34,7 +35,7 @@ class ProdutoMapperTest extends FoursaleDesafioApplicationTests {
 
             @BeforeEach
             void setup() {
-                produtoDto = pedidprodutoMapperMapper.toDto(produto);
+                produtoDto = produtoMapper.toDto(produto);
             }
 
             @Test
@@ -69,7 +70,7 @@ class ProdutoMapperTest extends FoursaleDesafioApplicationTests {
 
             @BeforeEach
             void setup() {
-                produto = pedidprodutoMapperMapper.toEntity(produtoDto);
+                produto = produtoMapper.toEntity(produtoDto);
             }
 
             @Test

@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class PedidoMapperTest extends FoursaleDesafioApplicationTests {
 
@@ -40,12 +41,10 @@ class PedidoMapperTest extends FoursaleDesafioApplicationTests {
             @Test
             void Entao_deve_ser_transformado_com_sucesso() {
                 assertNotNull(pedidoDto.getId());
-                assertNotNull(pedidoDto.getProdutos());
                 assertNotNull(pedidoDto.getUsuario());
                 assertNotNull(pedidoDto.getStatus());
                 assertNotNull(pedidoDto.getValorTotal());
                 assertEquals(pedido.getId(), pedidoDto.getId());
-                assertEquals(pedido.getProdutos().size(), pedidoDto.getProdutos().size());
                 assertEquals(pedido.getUsuario().getId(), pedidoDto.getUsuario().getId());
                 assertEquals(pedido.getStatus(), pedidoDto.getStatus());
                 assertEquals(pedido.getValorTotal(), pedidoDto.getValorTotal());
@@ -74,12 +73,10 @@ class PedidoMapperTest extends FoursaleDesafioApplicationTests {
             @Test
             void Entao_deve_ser_transformado_com_sucesso() {
                 assertNotNull(pedido.getId());
-                assertNotNull(pedido.getProdutos());
                 assertNotNull(pedido.getUsuario());
                 assertNotNull(pedido.getStatus());
                 assertNotNull(pedido.getValorTotal());
                 assertEquals(pedidoDto.getId(), pedido.getId());
-                assertEquals(pedidoDto.getProdutos().size(), pedido.getProdutos().size());
                 assertEquals(pedidoDto.getUsuario().getId(), pedido.getUsuario().getId());
                 assertEquals(pedidoDto.getStatus(), pedido.getStatus());
                 assertEquals(pedidoDto.getValorTotal(), pedido.getValorTotal());

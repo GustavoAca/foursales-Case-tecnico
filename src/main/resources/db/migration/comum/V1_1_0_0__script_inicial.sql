@@ -1,7 +1,7 @@
 create table usuarios (
   id binary(16) not null,
-  email varchar(250) not null,
-  senha varchar(250) not null,
+  email varchar(100) not null,
+  senha varchar(100) not null,
   perfil varchar(30) not null,
   nome varchar(30) not null,
   total_de_compras_realizadas int not null,
@@ -56,7 +56,6 @@ create table produtos (
 
 create table pedidos (
   id binary(16) not null,
-  produto_id binary(16) not null,
   usuario_id binary(16) not null,
   status varchar(30) not null,
   valor_total decimal(10, 2) not null,
@@ -65,7 +64,6 @@ create table pedidos (
   criado_por varchar(100) null,
   modificado_por varchar(100) null,
   primary key (id),
-  foreign key (produto_id) references produtos(id),
   foreign key (usuario_id) references usuarios(id)
 );
 
@@ -76,5 +74,20 @@ create table pagamentos (
   criado_por varchar(100) null,
   modificado_por varchar(100) null,
   primary key (pedido_id),
+  foreign key (pedido_id) references pedidos(id)
+);
+
+create table produto_pedido (
+  id binary(16) not null,
+  produto_id binary(16) not null,
+  pedido_id binary(16) not null,
+  quantidade int not null,
+  preco decimal(10, 2) not null,
+  data_de_criacao timestamp null default current_timestamp,
+  data_de_modificacao timestamp null default current_timestamp on update current_timestamp,
+  criado_por varchar(100) null,
+  modificado_por varchar(100) null,
+  primary key (id),
+  foreign key (produto_id) references produtos(id),
   foreign key (pedido_id) references pedidos(id)
 );
