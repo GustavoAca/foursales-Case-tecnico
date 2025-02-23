@@ -30,7 +30,8 @@ public class ProdutoController {
     }
 
     @GetMapping("/existe-estoque")
-    public Boolean listar(@RequestParam UUID id, @RequestParam Integer quantidadeDesejada) {
+    public Boolean listar(@RequestParam UUID id,
+                          @RequestParam Integer quantidadeDesejada) {
         return produtoService.hasEstoqueDisponivel(id, quantidadeDesejada);
     }
 

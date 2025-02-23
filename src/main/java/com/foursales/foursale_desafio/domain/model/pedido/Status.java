@@ -4,5 +4,5 @@ public enum Status {
     PENDENTE,
     CANCELADO,
     CANCELADO_AUTOMATICAMENTE,
-    CONFIRMADO
+    CONFIRMADO;
 }

@@ -3,7 +3,7 @@ package com.foursales.foursale_desafio.controller;
 import com.foursales.foursale_desafio.controller.dto.LoginRequest;
 import com.foursales.foursale_desafio.controller.dto.LoginResponse;
 import com.foursales.foursale_desafio.controller.dto.UsuarioDeCriacaoDto;
-import com.foursales.foursale_desafio.domain.service.usuario.TokenComponent;
+import com.foursales.foursale_desafio.domain.service.usuario.UsuarioComponent;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -12,9 +12,9 @@ import java.util.UUID;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    private final TokenComponent tokenComponent;
+    private final UsuarioComponent tokenComponent;
 
-    public UsuarioController(TokenComponent tokenComponent) {
+    public UsuarioController(UsuarioComponent tokenComponent) {
         this.tokenComponent = tokenComponent;
     }
 

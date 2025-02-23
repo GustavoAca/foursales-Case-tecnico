@@ -52,6 +52,7 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, UUID, PedidoRepos
         pedidoDto = pedidoMapper.toDto(salvar(pedidoMapper.toEntity(pedidoDto)));
         for (ProdutoPedidoDto produtoPedidoDto : produtosPedidos) {
             if (!produtoService.hasEstoqueDisponivel(produtoPedidoDto.getProdutoId(), produtoPedidoDto.getQuantidade())) {
+                produtoPedidoDto.setEstoqueDisponivel(Boolean.FALSE);
                 pedidoDto = atualizarStatus(pedidoDto.getId(), Status.CANCELADO_AUTOMATICAMENTE);
             }
             calcularValorTotal(pedidoDto, produtoPedidoDto);
@@ -72,7 +73,7 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, UUID, PedidoRepos
 
     public PedidoDto buscaPorId(UUID id) {
         Pedido pedido = buscarPorId(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException(id, PedidoDto.class.getName()));
+                .orElseThrow(() -> new RegistroNaoEncontradoException(id, "Pedido"));
         return pedidoMapper.toDto(pedido);
     }
 
@@ -154,14 +155,14 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, UUID, PedidoRepos
 
     private Status getStatus(UUID id) {
         return repo.findStatusById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException(id, PedidoDto.class.getName()))
+                .orElseThrow(() -> new RegistroNaoEncontradoException(id, "Pedido"))
                 .getStatus();
     }
 
     public void removerProduto(List<UUID> produtosPedidosId) {
         try {
-            produtosPedidosId.forEach(this::deletar);
-        } catch (DeletarRegistroException e) {
+            produtosPedidosId.forEach(produtoPedidoService::deletarPorId);
+        } catch (Exception e) {
             throw new DeletarRegistroException("Erro em deletar produtos com os ids %s", produtosPedidosId);
         }
     }

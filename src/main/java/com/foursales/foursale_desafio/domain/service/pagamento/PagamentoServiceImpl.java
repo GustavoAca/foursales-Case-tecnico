@@ -9,7 +9,7 @@ import com.foursales.foursale_desafio.domain.model.pedido.Status;
 import com.foursales.foursale_desafio.domain.repository.PagamentoRepository;
 import com.foursales.foursale_desafio.domain.service.pedido.PedidoService;
 import com.foursales.foursale_desafio.domain.service.produtopedido.ProdutoPedidoService;
-import com.foursales.foursale_desafio.domain.service.usuario.TokenComponent;
+import com.foursales.foursale_desafio.domain.service.usuario.UsuarioComponent;
 import com.foursales.foursale_desafio.exception.RegistroNaoEncontradoException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,13 +22,13 @@ public class PagamentoServiceImpl extends BaseServiceImpl<Pagamento, UUID, Pagam
     private final PedidoService pedidoService;
     private final ProdutoPedidoService produtoPedidoService;
     private final PagamentoMapper pagamentoMapper;
-    private final TokenComponent tokenComponent;
+    private final UsuarioComponent tokenComponent;
 
     protected PagamentoServiceImpl(PagamentoRepository repo,
                                    PedidoService pedidoService,
                                    ProdutoPedidoService produtoPedidoService,
                                    PagamentoMapper pagamentoMapper,
-                                   TokenComponent tokenComponent) {
+                                   UsuarioComponent tokenComponent) {
         super(repo);
         this.pedidoService = pedidoService;
         this.produtoPedidoService = produtoPedidoService;
@@ -42,6 +42,9 @@ public class PagamentoServiceImpl extends BaseServiceImpl<Pagamento, UUID, Pagam
             pedidoService.atualizarStatus(pedidoId, Status.CONFIRMADO);
             int quantidadeDeProdutosComprados = produtoPedidoService.atualizarEstoque(pedidoId);
             tokenComponent.atualizarComprasDeUsuarioPorPedidoId(pedidoId, quantidadeDeProdutosComprados);
+            salvar(Pagamento.builder()
+                    .pedidoId(pedidoId)
+                    .build());
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
@@ -50,7 +53,7 @@ public class PagamentoServiceImpl extends BaseServiceImpl<Pagamento, UUID, Pagam
     @Override
     public PagamentoDto buscaPorId(UUID id) {
         Pagamento pagamento = buscarPorId(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException(id, Pagamento.class.getName()));
+                .orElseThrow(() -> new RegistroNaoEncontradoException(id, "Pagamento"));
         return pagamentoMapper.toDto(salvar(pagamento));
     }
 

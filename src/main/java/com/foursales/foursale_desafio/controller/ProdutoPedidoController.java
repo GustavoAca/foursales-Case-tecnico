@@ -29,6 +29,12 @@ public class ProdutoPedidoController {
         return produtoPedidoService.listarPaginado(pageable);
     }
 
+    @GetMapping("/listar-por-pedido/{pedidoId}")
+    public ResponsePage<ProdutoPedidoDto> listar(@PathVariable UUID pedidoId,
+                                                 @PageableDefault(size = 20) Pageable pageable) {
+        return produtoPedidoService.listarPaginadoPorPedidoId(pedidoId, pageable);
+    }
+
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable UUID id) {
         produtoPedidoService.deletar(id);

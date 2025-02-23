@@ -11,7 +11,6 @@ import com.foursales.foursale_desafio.domain.mapper.dto.UsuarioDto;
 import com.foursales.foursale_desafio.domain.mapper.produto.ProdutoMapper;
 import com.foursales.foursale_desafio.domain.mapper.usuario.UsuarioMapper;
 import com.foursales.foursale_desafio.domain.model.produto.Produto;
-import com.foursales.foursale_desafio.domain.model.usuario.Usuario;
 import com.foursales.foursale_desafio.domain.repository.projection.FaturamentoProjection;
 import com.foursales.foursale_desafio.domain.repository.projection.GastoMedioUsuarioProjection;
 import com.foursales.foursale_desafio.domain.service.categoria.CategoriaService;
@@ -76,8 +75,9 @@ class AnaliseServiceImplTest extends FoursaleDesafioApplicationTests {
             for (int i = 55; i >= 50; i--) {
                 UsuarioDto usuario = mockFactory.construirUsuarioDto();
                 usuarioService.cadastrarUsuario(new UsuarioDeCriacaoDto(usuario.getEmail(), usuario.getPerfil(), usuario.getSenha(), usuario.getNome()));
+                String email = usuario.getEmail();
                 usuario = usuarioService.consultarPorEmail(usuario.getEmail())
-                        .orElseThrow(() -> new RegistroNaoEncontradoException("", Usuario.class.getName()));
+                        .orElseThrow(() -> new RegistroNaoEncontradoException(email, "Usuario"));
 
                 usuarioService.atualizarTotalDeCompra(usuario.getId(), 2000 + i);
             }

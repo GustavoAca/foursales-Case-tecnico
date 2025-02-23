@@ -36,5 +36,6 @@ public class ProdutoPedido extends EntityAbstract {
     private BigDecimal preco = BigDecimal.ZERO;
 
     @Column(name = "estoque_disponivel")
-    private Boolean estoqueDisponivel;
+    @Builder.Default
+    private Boolean estoqueDisponivel = Boolean.TRUE;
 }

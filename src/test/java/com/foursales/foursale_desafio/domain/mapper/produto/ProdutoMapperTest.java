@@ -44,13 +44,13 @@ class ProdutoMapperTest extends FoursaleDesafioApplicationTests {
                 assertNotNull(produtoDto.getNome());
                 assertNotNull(produtoDto.getDescricao());
                 assertNotNull(produtoDto.getPreco());
-                assertNotNull(produtoDto.getSubcategoriaDto());
+                assertNotNull(produtoDto.getSubcategoria());
                 assertNotNull(produtoDto.getQuantidadeEmEstoque());
                 assertEquals(produto.getId(), produtoDto.getId());
                 assertEquals(produto.getNome(), produtoDto.getNome());
                 assertEquals(produto.getDescricao(), produtoDto.getDescricao());
                 assertEquals(produto.getPreco(), produtoDto.getPreco());
-                assertEquals(produto.getSubcategoria().getId(), produtoDto.getSubcategoriaDto().getId());
+                assertEquals(produto.getSubcategoria().getId(), produtoDto.getSubcategoria().getId());
             }
         }
     }
@@ -85,7 +85,7 @@ class ProdutoMapperTest extends FoursaleDesafioApplicationTests {
                 assertEquals(produtoDto.getNome(), produto.getNome());
                 assertEquals(produtoDto.getDescricao(), produto.getDescricao());
                 assertEquals(produtoDto.getPreco(), produto.getPreco());
-                assertEquals(produtoDto.getSubcategoriaDto().getId(), produto.getSubcategoria().getId());
+                assertEquals(produtoDto.getSubcategoria().getId(), produto.getSubcategoria().getId());
             }
         }
     }

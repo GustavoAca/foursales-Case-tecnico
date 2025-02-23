@@ -36,7 +36,7 @@ public class SubcategoriaServiceImpl extends BaseServiceImpl<Subcategoria, UUID,
     @Override
     public SubcategoriaDto buscaPorId(UUID id) {
         Subcategoria subcategoria = buscarPorId(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException(id, SubcategoriaDto.class.getName()));
+                .orElseThrow(() -> new RegistroNaoEncontradoException(id, "Subcategoria"));
         return subcategoriaMapper.toDto(subcategoria);
     }
 
@@ -46,7 +46,7 @@ public class SubcategoriaServiceImpl extends BaseServiceImpl<Subcategoria, UUID,
             subcategoriaDto.setId(subcategoria.getId());
             Subcategoria categoriaAtualizada = salvar(subcategoriaMapper.toEntity(subcategoriaDto));
             return subcategoriaMapper.toDto(categoriaAtualizada);
-        }).orElseThrow(() -> new RegistroNaoEncontradoException(id, SubcategoriaDto.class.getName()));
+        }).orElseThrow(() -> new RegistroNaoEncontradoException(id, "Subcategoria"));
     }
 
     @Override

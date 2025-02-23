@@ -64,7 +64,7 @@ class ProdutoServiceImplTest extends FoursaleDesafioApplicationTests {
                 assertEquals(produtoCriado.getNome(), produto.getNome());
                 assertEquals(produtoCriado.getDescricao(), produto.getDescricao());
                 assertEquals(produtoCriado.getPreco(), produto.getPreco());
-                assertEquals(produtoCriado.getSubcategoriaDto().getId(), produto.getSubcategoria().getId());
+                assertEquals(produtoCriado.getSubcategoria().getId(), produto.getSubcategoria().getId());
             }
         }
     }
@@ -99,7 +99,7 @@ class ProdutoServiceImplTest extends FoursaleDesafioApplicationTests {
                 assertEquals(produtoCriado.getNome(), produtoAtualizado.getNome());
                 assertEquals(produtoCriado.getDescricao(), produtoAtualizado.getDescricao());
                 assertEquals(produtoCriado.getPreco(), produtoAtualizado.getPreco());
-                assertEquals(produtoCriado.getSubcategoriaDto().getId(), produtoAtualizado.getSubcategoriaDto().getId());
+                assertEquals(produtoCriado.getSubcategoria().getId(), produtoAtualizado.getSubcategoria().getId());
                 assertEquals(produtoCriado.getDataDeCriacao().getHour(), produtoAtualizado.getDataDeCriacao().getHour());
                 assertEquals(produtoCriado.getDataDeCriacao().getMinute(), produtoAtualizado.getDataDeCriacao().getMinute());
                 assertNotEquals(produtoCriado.getDataDeModificacao(), produtoAtualizado.getDataDeModificacao());

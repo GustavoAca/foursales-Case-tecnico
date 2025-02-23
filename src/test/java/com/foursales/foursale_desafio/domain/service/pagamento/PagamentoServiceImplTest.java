@@ -2,6 +2,8 @@ package com.foursales.foursale_desafio.domain.service.pagamento;
 
 import com.foursales.foursale_desafio.FoursaleDesafioApplicationTests;
 import com.foursales.foursale_desafio.domain.MockFactory;
+import com.foursales.foursale_desafio.domain.core.domain.ResponsePage;
+import com.foursales.foursale_desafio.domain.mapper.dto.PagamentoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.PedidoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoPedidoDto;
@@ -19,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Objects;
@@ -61,6 +64,24 @@ class PagamentoServiceImplTest extends FoursaleDesafioApplicationTests {
         private PedidoDto pedidoDto;
         private PedidoDto pedidoCriado;
         private boolean isPagamentoRealizado;
+        private ProdutoDto produtoDto;
+
+        @Nested
+        class Quando_listar_pagamentos extends FoursaleDesafioApplicationTests {
+            private ResponsePage<PagamentoDto> pagamentoDtos;
+
+            @BeforeEach
+            void setup() {
+                pedidoCriado = prepararPedido();
+                isPagamentoRealizado = pagamentoService.realizarPagamento(pedidoCriado.getId());
+                pagamentoDtos = pagamentoService.listarPaginado(PageRequest.of(0, 5));
+            }
+
+            @Test
+            void Entao_deve_listar_com_sucesso() {
+                assertNotEquals(0L, pagamentoDtos.getNumberOfElements());
+            }
+        }
 
         @Nested
         class Quando_puder_realizar_pagamento extends FoursaleDesafioApplicationTests {
@@ -70,18 +91,7 @@ class PagamentoServiceImplTest extends FoursaleDesafioApplicationTests {
 
             @BeforeEach
             void setup() {
-                ProdutoDto produtoDto = salvarProduto(1);
-                ProdutoPedidoDto produtoPedidoDto = ProdutoPedidoDto.builder()
-                        .preco(produtoDto.getPreco())
-                        .quantidade(1)
-                        .produto(produtoDto)
-                        .build();
-
-                pedidoDto = PedidoDto.builder()
-                        .produtosPedidos(List.of(produtoPedidoDto))
-                        .usuario(usuarioMapper.toDto(usuarioService.salvar(mockFactory.construirUsuario())))
-                        .build();
-                pedidoCriado = pedidoService.criar(pedidoDto);
+                pedidoCriado = prepararPedido();
                 isPagamentoRealizado = pagamentoService.realizarPagamento(pedidoCriado.getId());
                 produtoAtualizado = produtoService.buscaPorId(produtoDto.getId());
             }
@@ -154,6 +164,21 @@ class PagamentoServiceImplTest extends FoursaleDesafioApplicationTests {
                 }
             }
         }
+
+        private PedidoDto prepararPedido() {
+            produtoDto = salvarProduto(1);
+            ProdutoPedidoDto produtoPedidoDto = ProdutoPedidoDto.builder()
+                    .preco(produtoDto.getPreco())
+                    .quantidade(1)
+                    .produto(produtoDto)
+                    .build();
+
+            pedidoDto = PedidoDto.builder()
+                    .produtosPedidos(List.of(produtoPedidoDto))
+                    .build();
+            return pedidoService.criar(pedidoDto);
+        }
+
     }
 
     private ProdutoDto salvarProduto(Integer quantidadeNoEstoque) {

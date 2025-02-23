@@ -31,8 +31,8 @@ public class PagamentroController {
     }
 
     @PostMapping("/pedidos/{pedidoId}")
-    public Boolean pagar(@PathVariable UUID pedidoID) {
-        return pagamentoService.realizarPagamento(pedidoID);
+    public Boolean pagar(@PathVariable UUID pedidoId) {
+        return pagamentoService.realizarPagamento(pedidoId);
     }
 
     @DeleteMapping("/{id}")

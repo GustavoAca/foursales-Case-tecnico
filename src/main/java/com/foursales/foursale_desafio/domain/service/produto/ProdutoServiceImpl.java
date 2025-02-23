@@ -3,9 +3,11 @@ package com.foursales.foursale_desafio.domain.service.produto;
 import com.foursales.foursale_desafio.domain.core.domain.ResponsePage;
 import com.foursales.foursale_desafio.domain.core.domain.service.BaseServiceImpl;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoDto;
+import com.foursales.foursale_desafio.domain.mapper.dto.SubcategoriaDto;
 import com.foursales.foursale_desafio.domain.mapper.produto.ProdutoMapper;
 import com.foursales.foursale_desafio.domain.model.produto.Produto;
 import com.foursales.foursale_desafio.domain.repository.ProdutoRepository;
+import com.foursales.foursale_desafio.domain.service.subcategoria.SubcategoriaService;
 import com.foursales.foursale_desafio.exception.RegistroNaoEncontradoException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,14 +18,19 @@ import java.util.UUID;
 public class ProdutoServiceImpl extends BaseServiceImpl<Produto, UUID, ProdutoRepository> implements ProdutoService {
 
     private final ProdutoMapper produtoMapper;
+    private final SubcategoriaService subcategoriaService;
 
     protected ProdutoServiceImpl(ProdutoRepository repo,
-                                 ProdutoMapper produtoMapper) {
+                                 ProdutoMapper produtoMapper,
+                                 SubcategoriaService subcategoriaService) {
         super(repo);
         this.produtoMapper = produtoMapper;
+        this.subcategoriaService = subcategoriaService;
     }
 
     public ProdutoDto criar(ProdutoDto produtoDto) {
+        SubcategoriaDto subcategoriaDto = subcategoriaService.buscaPorId(produtoDto.getSubcategoriaId());
+        produtoDto.setSubcategoria(subcategoriaDto);
         return produtoMapper.toDto(salvar(produtoMapper.toEntity(produtoDto)));
     }
 
@@ -33,7 +40,7 @@ public class ProdutoServiceImpl extends BaseServiceImpl<Produto, UUID, ProdutoRe
 
     public ProdutoDto buscaPorId(UUID id) {
         Produto produto = buscarPorId(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException(id, ProdutoDto.class.getName()));
+                .orElseThrow(() -> new RegistroNaoEncontradoException(id, "Produto"));
         return produtoMapper.toDto(produto);
     }
 
@@ -42,7 +49,7 @@ public class ProdutoServiceImpl extends BaseServiceImpl<Produto, UUID, ProdutoRe
             produtoDto.setId(produto.getId());
             Produto produtoAtualizado = salvar(produtoMapper.toEntity(produtoDto));
             return produtoMapper.toDto(produtoAtualizado);
-        }).orElseThrow(() -> new RegistroNaoEncontradoException(id, ProdutoDto.class.getName()));
+        }).orElseThrow(() -> new RegistroNaoEncontradoException(id, "Produto"));
     }
 
     @Override

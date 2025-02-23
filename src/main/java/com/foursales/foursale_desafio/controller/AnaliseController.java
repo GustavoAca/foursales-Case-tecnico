@@ -7,10 +7,7 @@ import com.foursales.foursale_desafio.domain.repository.projection.GastoMedioUsu
 import com.foursales.foursale_desafio.domain.service.analise.AnaliseService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -25,7 +22,7 @@ public class AnaliseController {
     }
 
     @GetMapping("/maiores-compradores")
-    public ResponsePage<UsuarioDto> getMaioresCompradores(@PageableDefault(size = 20) Pageable pageable) {
+    public ResponsePage<UsuarioDto> getMaioresCompradores(@PageableDefault(size = 5) Pageable pageable) {
         return analiseService.getMaioresCompradores(pageable);
     }
 
@@ -40,8 +37,8 @@ public class AnaliseController {
     }
 
     @GetMapping("/faturamento-por-periodo")
-    public ResponsePage<FaturamentoProjection> getFaturamentoPorPeriodo(int mesReferencia,
-                                                                        int anoReferencia,
+    public ResponsePage<FaturamentoProjection> getFaturamentoPorPeriodo(@RequestParam int mesReferencia,
+                                                                        @RequestParam int anoReferencia,
                                                                         @PageableDefault(size = 20) Pageable pageable) {
         return analiseService.getFaturamentoPorPeriodo(mesReferencia, anoReferencia, pageable);
     }

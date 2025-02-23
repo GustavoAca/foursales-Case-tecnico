@@ -57,7 +57,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UUID, UsuarioRe
     @Override
     public void atualizarTotalDeCompra(UUID usuarioId, int comprasRealizadas) {
         Usuario usuario = buscarPorId(usuarioId)
-                .orElseThrow(() -> new RegistroNaoEncontradoException(usuarioId, Usuario.class.getName()));
+                .orElseThrow(() -> new RegistroNaoEncontradoException(usuarioId, "Usuario"));
         usuario.setTotalDeComprasRealizadas(usuario.getTotalDeComprasRealizadas() + comprasRealizadas);
         salvar(usuario);
     }

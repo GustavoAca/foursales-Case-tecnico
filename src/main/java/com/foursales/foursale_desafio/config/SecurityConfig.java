@@ -39,8 +39,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios/cadastrar").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/usuarios").hasAuthority(Perfil.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/usuarios").hasAuthority(Perfil.ROLE_ADMIN.name())
+                        .requestMatchers(HttpMethod.GET, "produtos/**").hasAuthority(Perfil.ROLE_USER.name())
                         .requestMatchers("/produtos/**").hasAuthority(Perfil.ROLE_ADMIN.name())
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)

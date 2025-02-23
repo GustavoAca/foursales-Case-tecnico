@@ -4,7 +4,7 @@ import com.foursales.foursale_desafio.domain.core.domain.ResponsePage;
 import com.foursales.foursale_desafio.domain.mapper.dto.PedidoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoPedidoDto;
 import com.foursales.foursale_desafio.domain.model.pedido.Status;
-import com.foursales.foursale_desafio.domain.service.pedido.PedidoService;
+import com.foursales.foursale_desafio.domain.service.usuario.UsuarioComponent;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
@@ -16,70 +16,70 @@ import java.util.UUID;
 @RequestMapping("/pedidos")
 public class PedidoController {
 
-    private final PedidoService pedidoService;
+    private final UsuarioComponent usuarioComponent;
 
-    public PedidoController(PedidoService pedidoService) {
-        this.pedidoService = pedidoService;
+    public PedidoController(
+            UsuarioComponent usuarioComponent) {
+        this.usuarioComponent = usuarioComponent;
     }
 
     @GetMapping("/{id}")
     public PedidoDto buscarPorId(@PathVariable UUID id) {
-        return pedidoService.buscaPorId(id);
+        return usuarioComponent.buscarPedidoPorId(id);
     }
 
     @GetMapping("/listar")
     public ResponsePage<PedidoDto> listar(@PageableDefault(size = 20) Pageable pageable) {
-        return pedidoService.listarPaginado(pageable);
+        return usuarioComponent.listarPedidoPaginado(pageable);
     }
 
     @GetMapping("/listar-por-usuario/{usuarioId}")
     public ResponsePage<PedidoDto> listarPorUsuario(@PathVariable UUID usuarioId,
                                                     @PageableDefault(size = 20) Pageable pageable) {
-        return pedidoService.listarPaginado(pageable);
+        return usuarioComponent.listarPedidoPorUsuarioIdPaginado(usuarioId, pageable);
     }
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable UUID id) {
-        pedidoService.deletar(id);
+        usuarioComponent.deletarPedido(id);
     }
 
     @PostMapping
     public PedidoDto criar(@RequestBody PedidoDto pedidoDto) {
-        return pedidoService.criar(pedidoDto);
+        return usuarioComponent.criarPedido(pedidoDto);
     }
 
     @PutMapping("/{id}/atualizar")
     public PedidoDto atualizar(@RequestBody PedidoDto pedidoDto,
                                @PathVariable UUID id) {
-        return pedidoService.atualizar(id, pedidoDto);
+        return usuarioComponent.atualizarPedido(id, pedidoDto);
     }
 
     @PostMapping("/{id}/adicionar-produto")
     public void adicionarProduto(@RequestBody List<ProdutoPedidoDto> pedidoDto,
                                  @PathVariable UUID id) {
-        pedidoService.adicionarProduto(pedidoDto, id);
+        usuarioComponent.adicionarProdutoPedido(pedidoDto, id);
     }
 
     @PutMapping("/{id}/atualizar-status")
     public PedidoDto atualizarStatus(@PathVariable UUID id,
-                                     @RequestBody Status status) {
-        return pedidoService.atualizarStatus(id, status);
+                                     @RequestParam Status status) {
+        return usuarioComponent.atualizarStatusDePedido(id, status);
     }
 
     @GetMapping("/{id}/disponivel-para-pagamento")
     public Boolean isDisponivelParaPagamento(@PathVariable UUID id) {
-        return pedidoService.isDisponivelParaPagamento(id);
+        return usuarioComponent.isPedidoDisponivelParaPagamento(id);
     }
 
     @DeleteMapping("/remover-produtos")
     public void removerProdutos(@RequestBody List<UUID> ids) {
-        pedidoService.removerProduto(ids);
+        usuarioComponent.removerProdutoPedido(ids);
     }
 
-    //todo
-//    @PutMapping("/{id}/atualizar-total-de-compras")
-//    public void atualizarComprasDeUsuarioPorPedidoId(@PathVariable UUID id,
-//                                                     @RequestParam int quantidadeDeItensComprados) {
-//        pedidoService.atualizarComprasDeUsuarioPorPedidoId(id, quantidadeDeItensComprados);
-//    }
+    @PutMapping("/{id}/atualizar-total-de-compras")
+    public void atualizarComprasDeUsuarioPorPedidoId(@PathVariable UUID id,
+                                                     @RequestParam int quantidadeDeItensComprados) {
+        usuarioComponent.atualizarComprasDeUsuarioPorPedidoId(id, quantidadeDeItensComprados);
+    }
 }
