@@ -1,5 +1,6 @@
 package com.foursales.foursale_desafio.domain;
 
+import com.foursales.foursale_desafio.domain.core.security.Perfil;
 import com.foursales.foursale_desafio.domain.mapper.dto.*;
 import com.foursales.foursale_desafio.domain.model.categoria.Categoria;
 import com.foursales.foursale_desafio.domain.model.categoria.Subcategoria;
@@ -7,7 +8,6 @@ import com.foursales.foursale_desafio.domain.model.pagamento.Pagamento;
 import com.foursales.foursale_desafio.domain.model.pedido.Pedido;
 import com.foursales.foursale_desafio.domain.model.produto.Produto;
 import com.foursales.foursale_desafio.domain.model.produto.ProdutoPedido;
-import com.foursales.foursale_desafio.domain.model.usuario.Perfil;
 import com.foursales.foursale_desafio.domain.model.usuario.Usuario;
 import org.springframework.stereotype.Component;
 
@@ -113,17 +113,17 @@ public class MockFactory {
     public Usuario construirUsuario(){
         return Usuario.builder()
                 .id(UUID.randomUUID())
-                .email(String.format("gustavo%d@foursales.com", new Random().nextInt(1000) + 1))
+                .email(String.format("gustavo%d@foursales.com", new Random().nextInt(100000) + 1))
                 .nome("Gustavo")
                 .senha("1234")
-                .perfil(Perfil.USER)
+                .perfil(Perfil.ROLE_USER)
                 .build();
     }
 
     public PedidoDto construirPedidoDto(UUID id){
         return PedidoDto.builder()
                 .id(Objects.nonNull(id) ? id : UUID.randomUUID())
-                .usuario(construirUsuario())
+                .usuario(construirUsuarioDto())
                 .build();
     }
 
@@ -136,6 +136,16 @@ public class MockFactory {
     public Pagamento construirPagamento(UUID pedidoId){
         return Pagamento.builder()
                 .pedidoId(construirPedidoDto(pedidoId).getId())
+                .build();
+    }
+
+    public UsuarioDto construirUsuarioDto() {
+        return UsuarioDto.builder()
+                .id(UUID.randomUUID())
+                .email(String.format("gustavo%d@foursales.com", new Random().nextInt(100000) + 1))
+                .nome("Gustavo")
+                .senha("1234")
+                .perfil(Perfil.ROLE_USER)
                 .build();
     }
 }

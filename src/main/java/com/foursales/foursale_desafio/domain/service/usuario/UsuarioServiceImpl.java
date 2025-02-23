@@ -3,11 +3,15 @@ package com.foursales.foursale_desafio.domain.service.usuario;
 import com.foursales.foursale_desafio.controller.dto.UsuarioDeCriacaoDto;
 import com.foursales.foursale_desafio.domain.core.domain.ResponsePage;
 import com.foursales.foursale_desafio.domain.core.domain.service.BaseServiceImpl;
+import com.foursales.foursale_desafio.domain.mapper.dto.UsuarioDto;
+import com.foursales.foursale_desafio.domain.mapper.usuario.UsuarioMapper;
 import com.foursales.foursale_desafio.domain.model.usuario.Usuario;
 import com.foursales.foursale_desafio.domain.repository.UsuarioRepository;
+import com.foursales.foursale_desafio.domain.service.pedido.PedidoService;
 import com.foursales.foursale_desafio.exception.RegistroJaCadastradoException;
 import com.foursales.foursale_desafio.exception.RegistroNaoEncontradoException;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,8 +20,16 @@ import java.util.UUID;
 @Service
 public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UUID, UsuarioRepository> implements UsuarioService {
 
-    protected UsuarioServiceImpl(UsuarioRepository repo) {
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UsuarioMapper usuarioMapper;
+
+    protected UsuarioServiceImpl(UsuarioRepository repo,
+                                 BCryptPasswordEncoder bCryptPasswordEncoder,
+                                 UsuarioMapper usuarioMapper,
+                                 PedidoService pedidoService) {
         super(repo);
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.usuarioMapper = usuarioMapper;
     }
 
     @Override
@@ -31,15 +43,15 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UUID, UsuarioRe
 
         salvar(Usuario.builder()
                 .nome(usuarioDeCriacaoDto.nome())
-                .senha(usuarioDeCriacaoDto.senha())
+                .senha(bCryptPasswordEncoder.encode(usuarioDeCriacaoDto.senha()))
                 .email(usuarioDeCriacaoDto.email())
                 .perfil(usuarioDeCriacaoDto.perfil())
                 .build());
     }
 
     @Override
-    public ResponsePage<Usuario> getMaioresCompradores(Pageable pageable) {
-        return mapearPageSimples(repo.findAllByOrderByTotalDeComprasRealizadasDesc(pageable));
+    public ResponsePage<UsuarioDto> getMaioresCompradores(Pageable pageable) {
+        return mapearPage(repo.findAllByOrderByTotalDeComprasRealizadasDesc(pageable), usuarioMapper::toDto);
     }
 
     @Override
@@ -48,5 +60,10 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UUID, UsuarioRe
                 .orElseThrow(() -> new RegistroNaoEncontradoException(usuarioId, Usuario.class.getName()));
         usuario.setTotalDeComprasRealizadas(usuario.getTotalDeComprasRealizadas() + comprasRealizadas);
         salvar(usuario);
+    }
+
+    @Override
+    public Optional<UsuarioDto> consultarPorEmail(String email) {
+        return repo.findByEmail(email).map(usuarioMapper::toDto);
     }
 }

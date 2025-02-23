@@ -1,6 +1,6 @@
 package com.foursales.foursale_desafio.controller.dto;
 
-import com.foursales.foursale_desafio.domain.model.usuario.Perfil;
+import com.foursales.foursale_desafio.domain.core.security.Perfil;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 

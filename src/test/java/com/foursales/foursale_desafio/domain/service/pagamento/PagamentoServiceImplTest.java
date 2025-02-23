@@ -6,6 +6,7 @@ import com.foursales.foursale_desafio.domain.mapper.dto.PedidoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoPedidoDto;
 import com.foursales.foursale_desafio.domain.mapper.produto.ProdutoMapper;
+import com.foursales.foursale_desafio.domain.mapper.usuario.UsuarioMapper;
 import com.foursales.foursale_desafio.domain.model.pedido.Status;
 import com.foursales.foursale_desafio.domain.model.produto.Produto;
 import com.foursales.foursale_desafio.domain.service.categoria.CategoriaService;
@@ -52,6 +53,9 @@ class PagamentoServiceImplTest extends FoursaleDesafioApplicationTests {
     @Autowired
     private ProdutoPedidoService produtoPedidoService;
 
+    @Autowired
+    private UsuarioMapper usuarioMapper;
+
     @Nested
     class Dado_um_pedido extends FoursaleDesafioApplicationTests {
         private PedidoDto pedidoDto;
@@ -75,7 +79,7 @@ class PagamentoServiceImplTest extends FoursaleDesafioApplicationTests {
 
                 pedidoDto = PedidoDto.builder()
                         .produtosPedidos(List.of(produtoPedidoDto))
-                        .usuario(usuarioService.salvar(mockFactory.construirUsuario()))
+                        .usuario(usuarioMapper.toDto(usuarioService.salvar(mockFactory.construirUsuario())))
                         .build();
                 pedidoCriado = pedidoService.criar(pedidoDto);
                 isPagamentoRealizado = pagamentoService.realizarPagamento(pedidoCriado.getId());
@@ -105,7 +109,7 @@ class PagamentoServiceImplTest extends FoursaleDesafioApplicationTests {
 
                     pedidoDto = PedidoDto.builder()
                             .produtosPedidos(List.of(produtoPedidoDto))
-                            .usuario(usuarioService.salvar(mockFactory.construirUsuario()))
+                            .usuario(usuarioMapper.toDto(usuarioService.salvar(mockFactory.construirUsuario())))
                             .build();
                     pedidoCriado = pedidoService.criar(pedidoDto);
                     isPagamentoRealizado = pagamentoService.realizarPagamento(pedidoCriado.getId());
@@ -134,7 +138,7 @@ class PagamentoServiceImplTest extends FoursaleDesafioApplicationTests {
 
                     pedidoDto = PedidoDto.builder()
                             .produtosPedidos(List.of(produtoPedidoDto))
-                            .usuario(usuarioService.salvar(mockFactory.construirUsuario()))
+                            .usuario(usuarioMapper.toDto(usuarioService.salvar(mockFactory.construirUsuario())))
                             .status(Status.CONFIRMADO)
                             .build();
                     pedidoCriado = pedidoService.criar(pedidoDto);

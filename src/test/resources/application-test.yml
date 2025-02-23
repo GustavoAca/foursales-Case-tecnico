@@ -3,7 +3,7 @@ spring:
     url: jdbc:h2:mem:testedb;MODE=MySql;DATABASE_TO_LOWER=TRUE
     driver-class-name: org.h2.Driver
     username: sa
-    password: password
+    password: senha
   jpa:
     show-sql: true
     hibernate:
@@ -15,4 +15,4 @@ spring:
   flyway:
     locations: filesystem:src/main/resources/db/migration/comum
     user: sa
-    password: password
+    password: senha

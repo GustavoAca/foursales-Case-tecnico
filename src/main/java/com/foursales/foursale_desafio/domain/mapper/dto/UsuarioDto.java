@@ -1,8 +1,7 @@
-package com.foursales.foursale_desafio.domain.model.usuario;
+package com.foursales.foursale_desafio.domain.mapper.dto;
 
-import com.foursales.foursale_desafio.domain.core.domain.model.EntityAbstract;
+import com.foursales.foursale_desafio.domain.core.domain.model.dto.DtoAbstract;
 import com.foursales.foursale_desafio.domain.core.security.Perfil;
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -13,20 +12,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "usuarios")
-@Entity
-public class Usuario extends EntityAbstract {
+public class UsuarioDto extends DtoAbstract {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String email;
     private String senha;
-    @Enumerated(EnumType.STRING)
     private Perfil perfil;
     private String nome;
-    @Column(name = "total_de_compras_realizadas")
     @Builder.Default
     private Integer totalDeComprasRealizadas = 0;
-
 }

@@ -1,13 +1,15 @@
 package com.foursales.foursale_desafio.domain.service.analise;
 
 import com.foursales.foursale_desafio.domain.core.domain.ResponsePage;
-import com.foursales.foursale_desafio.domain.model.usuario.Usuario;
+import com.foursales.foursale_desafio.domain.mapper.dto.UsuarioDto;
 import com.foursales.foursale_desafio.domain.repository.projection.FaturamentoProjection;
 import com.foursales.foursale_desafio.domain.repository.projection.GastoMedioUsuarioProjection;
 import com.foursales.foursale_desafio.domain.service.pedido.PedidoService;
 import com.foursales.foursale_desafio.domain.service.usuario.UsuarioService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class AnaliseServiceImpl implements AnaliseService {
@@ -20,7 +22,7 @@ public class AnaliseServiceImpl implements AnaliseService {
         this.pedidoService = pedidoService;
     }
 
-    public ResponsePage<Usuario> getMaioresCompradores(Pageable pageable) {
+    public ResponsePage<UsuarioDto> getMaioresCompradores(Pageable pageable) {
         return usuarioService.getMaioresCompradores(pageable);
     }
 
@@ -28,9 +30,13 @@ public class AnaliseServiceImpl implements AnaliseService {
         return pedidoService.getValorGastoMedioPorUsuario(pageable);
     }
 
-    public ResponsePage<FaturamentoProjection> getFaturamentoMensal(int mesReferencia,
-                                                                    int anoReferencia,
-                                                                    Pageable pageable) {
+    public GastoMedioUsuarioProjection getValorGastoMedioPorUsuarioId(UUID usuarioId) {
+        return pedidoService.getValorGastoMedioPorUsuarioId(usuarioId);
+    }
+
+    public ResponsePage<FaturamentoProjection> getFaturamentoPorPeriodo(int mesReferencia,
+                                                                        int anoReferencia,
+                                                                        Pageable pageable) {
         return pedidoService.getFaturamentoPorPerido(mesReferencia, anoReferencia, pageable);
     }
 }
