@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "produtos")
+@Table(name = "pedidos")
 @Entity
 public class Pedido extends EntityAbstract {
 
@@ -31,12 +31,13 @@ public class Pedido extends EntityAbstract {
     private BigDecimal valorTotal = BigDecimal.ZERO;
 
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     private Status status = Status.PENDENTE;
 
     @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Pagamento pagamento;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ProdutoPedido> produtoPedidos = new LinkedList<>();
 
     @ManyToOne

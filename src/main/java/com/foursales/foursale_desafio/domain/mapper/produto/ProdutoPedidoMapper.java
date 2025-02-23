@@ -9,6 +9,8 @@ import com.foursales.foursale_desafio.domain.model.produto.Produto;
 import com.foursales.foursale_desafio.domain.model.produto.ProdutoPedido;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class ProdutoPedidoMapper {
 
@@ -23,11 +25,12 @@ public class ProdutoPedidoMapper {
 
     public ProdutoPedido toEntity(ProdutoPedidoDto produtoPedidoDto) {
         return ProdutoPedido.builder()
-                .id(produtoPedidoDto.getId())
+                .id(Objects.isNull(produtoPedidoDto.getId()) ? null : produtoPedidoDto.getId())
                 .preco(produtoPedidoDto.getPreco())
                 .quantidade(produtoPedidoDto.getQuantidade())
                 .pedido(toPedidoEntity(produtoPedidoDto.getPedido()))
                 .produto(toProdutoEntity(produtoPedidoDto.getProduto()))
+                .estoqueDisponivel(produtoPedidoDto.getEstoqueDisponivel())
                 .criadoPor(produtoPedidoDto.getCriadoPor())
                 .dataDeCriacao(produtoPedidoDto.getDataDeCriacao())
                 .modificadoPor(produtoPedidoDto.getModificadoPor())
@@ -36,11 +39,11 @@ public class ProdutoPedidoMapper {
     }
 
     private Pedido toPedidoEntity(PedidoDto pedidoDto) {
-        return pedidoMapper.toEntity(pedidoDto);
+        return Objects.isNull(pedidoDto) ? null : pedidoMapper.toEntity(pedidoDto);
     }
 
     private Produto toProdutoEntity(ProdutoDto produtoDto) {
-        return produtoMapper.toEntity(produtoDto);
+        return Objects.isNull(produtoDto) ? null : produtoMapper.toEntity(produtoDto);
     }
 
     public ProdutoPedidoDto toDto(ProdutoPedido produtoPedido) {
@@ -50,6 +53,7 @@ public class ProdutoPedidoMapper {
                 .quantidade(produtoPedido.getQuantidade())
                 .pedido(toPedidoDto(produtoPedido.getPedido()))
                 .produto(toProdutoDto(produtoPedido.getProduto()))
+                .estoqueDisponivel(produtoPedido.getEstoqueDisponivel())
                 .criadoPor(produtoPedido.getCriadoPor())
                 .dataDeCriacao(produtoPedido.getDataDeCriacao())
                 .modificadoPor(produtoPedido.getModificadoPor())
@@ -58,10 +62,10 @@ public class ProdutoPedidoMapper {
     }
 
     private PedidoDto toPedidoDto(Pedido pedido) {
-        return pedidoMapper.toDto(pedido);
+        return Objects.isNull(pedido) ? null : pedidoMapper.toDto(pedido);
     }
 
     private ProdutoDto toProdutoDto(Produto produto) {
-        return produtoMapper.toDto(produto);
+        return Objects.isNull(produto) ? null : produtoMapper.toDto(produto);
     }
 }

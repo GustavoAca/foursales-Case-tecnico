@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProdutoServiceImplTest extends FoursaleDesafioApplicationTests {
@@ -41,7 +43,9 @@ class ProdutoServiceImplTest extends FoursaleDesafioApplicationTests {
         void setup() {
             produto = mockFactory.construirProduto();
             produto.setId(null);
+            produto.getSubcategoria().getCategoria().setId(null);
             produto.getSubcategoria().setCategoria(categoriaService.salvar(produto.getSubcategoria().getCategoria()));
+            produto.getSubcategoria().setId(null);
             produto.setSubcategoria(subcategoriaService.salvar(produto.getSubcategoria()));
         }
 
@@ -73,7 +77,9 @@ class ProdutoServiceImplTest extends FoursaleDesafioApplicationTests {
         void setup() {
             Produto produto = mockFactory.construirProduto();
             produto.setId(null);
+            produto.getSubcategoria().getCategoria().setId(null);
             produto.getSubcategoria().setCategoria(categoriaService.salvar(produto.getSubcategoria().getCategoria()));
+            produto.getSubcategoria().setId(null);
             produto.setSubcategoria(subcategoriaService.salvar(produto.getSubcategoria()));
             produtoCriado = produtoService.criar(produtoMapper.toDto(produto));
         }
@@ -106,7 +112,7 @@ class ProdutoServiceImplTest extends FoursaleDesafioApplicationTests {
 
             @BeforeEach
             void setup() {
-                produtos = produtoService.listarPaginado(PageRequest.of(0, 5));
+                produtos = produtoService.listarPaginado(PageRequest.of(0, 1));
             }
 
             @Test
@@ -143,6 +149,71 @@ class ProdutoServiceImplTest extends FoursaleDesafioApplicationTests {
             @Test
             void Entao_deve_ter_sucesso() {
                 assertFalse(existProduto);
+            }
+        }
+    }
+
+    @Nested
+    class Dado_produto_com_estoque extends FoursaleDesafioApplicationTests {
+        private ProdutoDto produtoCriado;
+
+        @BeforeEach
+        void setup() {
+            produtoCriado = salvarProduto(null);
+        }
+
+        @Nested
+        class Quando_verificar_se_produto_tem_estoque extends FoursaleDesafioApplicationTests {
+            private Boolean hasEstoqueDisponivel;
+
+            @BeforeEach
+            void setup() {
+                hasEstoqueDisponivel = produtoService.hasEstoqueDisponivel(produtoCriado.getId(), 1);
+            }
+
+            @Test
+            void Entao_deve_confirmar_que_existe() {
+                assertTrue(hasEstoqueDisponivel);
+            }
+        }
+    }
+
+    private ProdutoDto salvarProduto(Integer quantidadeNoEstoque) {
+        Produto produto = mockFactory.construirProduto();
+        produto.setId(null);
+        produto.getSubcategoria().getCategoria().setId(null);
+        produto.getSubcategoria().setCategoria(categoriaService.salvar(produto.getSubcategoria().getCategoria()));
+        produto.getSubcategoria().setId(null);
+        produto.setSubcategoria(subcategoriaService.salvar(produto.getSubcategoria()));
+
+        if (Objects.nonNull(quantidadeNoEstoque)) {
+            produto.setQuantidadeEmEstoque(quantidadeNoEstoque);
+        }
+
+        return produtoService.criar(produtoMapper.toDto(produto));
+    }
+
+    @Nested
+    class Dado_produto_sem_estoque extends FoursaleDesafioApplicationTests {
+        private ProdutoDto produtoCriado;
+
+        @BeforeEach
+        void setup() {
+            produtoCriado = salvarProduto(0);
+        }
+
+        @Nested
+        class Quando_verificar_se_produto_tem_estoque extends FoursaleDesafioApplicationTests {
+            private Boolean hasEstoqueDisponivel;
+
+            @BeforeEach
+            void setup() {
+                hasEstoqueDisponivel = produtoService.hasEstoqueDisponivel(produtoCriado.getId(), 1);
+            }
+
+            @Test
+            void Entao_deve_confirmar_que_existe() {
+                assertFalse(hasEstoqueDisponivel);
             }
         }
     }

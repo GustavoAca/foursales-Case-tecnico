@@ -12,9 +12,8 @@ import com.foursales.foursale_desafio.domain.model.usuario.Usuario;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.UUID;
 
 @Component
@@ -93,6 +92,14 @@ public class MockFactory {
                 .build();
     }
 
+    public ProdutoPedido construirProdutoPedidoComListaExistente() {
+        return ProdutoPedido.builder()
+                .quantidade(2)
+                .preco(BigDecimal.ONE)
+                .produto(construirProduto())
+                .build();
+    }
+
     public ProdutoPedidoDto construirProdutoPedidoDto(UUID id) {
         return ProdutoPedidoDto.builder()
                 .id(Objects.nonNull(id) ? id : UUID.randomUUID())
@@ -103,19 +110,11 @@ public class MockFactory {
                 .build();
     }
 
-    public List<Produto> construirListaDeProdutos(){
-        List<Produto> listaDeProdutos = new LinkedList<>();
-        for(int i = 0; i < 3; i++){
-            listaDeProdutos.add(construirProduto());
-        }
-        return listaDeProdutos;
-    }
-
     public Usuario construirUsuario(){
         return Usuario.builder()
                 .id(UUID.randomUUID())
-                .email("jorge@foursales.com")
-                .nome("Jorge")
+                .email(String.format("gustavo%d@foursales.com", new Random().nextInt(1000) + 1))
+                .nome("Gustavo")
                 .senha("1234")
                 .perfil(Perfil.USER)
                 .build();
@@ -126,14 +125,6 @@ public class MockFactory {
                 .id(Objects.nonNull(id) ? id : UUID.randomUUID())
                 .usuario(construirUsuario())
                 .build();
-    }
-
-    public List<ProdutoDto> construirListaDeProdutosDto(){
-        List<ProdutoDto> listaDeProdutos = new LinkedList<>();
-        for(int i = 0; i <= 3; i++){
-            listaDeProdutos.add(construirProdutoDto());
-        }
-        return listaDeProdutos;
     }
 
     public PagamentoDto construirPagamentoDto(UUID pedidoId){
