@@ -1,6 +1,7 @@
 package com.foursales.foursale_desafio.domain.model.usuario;
 
 import com.foursales.foursale_desafio.domain.core.domain.model.EntityAbstract;
+import com.foursales.foursale_desafio.domain.core.security.Perfil;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

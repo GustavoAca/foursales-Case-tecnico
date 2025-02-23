@@ -1,5 +1,6 @@
 package com.foursales.foursale_desafio.domain.mapper.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.foursales.foursale_desafio.domain.core.domain.model.dto.DtoAbstract;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,5 +23,10 @@ public class ProdutoDto extends DtoAbstract {
     private String nome;
     private BigDecimal preco;
     private Integer quantidadeEmEstoque;
-    private SubcategoriaDto subcategoriaDto;
+    private SubcategoriaDto subcategoria;
+
+    @JsonIgnore
+    public UUID getSubcategoriaId() {
+        return this.subcategoria.getId();
+    }
 }

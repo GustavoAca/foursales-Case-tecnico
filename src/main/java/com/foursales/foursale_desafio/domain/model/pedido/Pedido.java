@@ -34,7 +34,7 @@ public class Pedido extends EntityAbstract {
     @Enumerated(EnumType.STRING)
     private Status status = Status.PENDENTE;
 
-    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)

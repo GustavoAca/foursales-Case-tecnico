@@ -26,6 +26,12 @@ public interface PedidoRepository extends BaseRepository<Pedido, UUID> {
             "GROUP BY p.usuario.id")
     Page<GastoMedioUsuarioProjection> findValorGastoMedioPorUsuario(Pageable pageable);
 
+    @Query("SELECT AVG(p.valorTotal) AS mediaDeGasto, " +
+            "p.usuario.id AS usuarioId " +
+            "FROM Pedido p " +
+            "WHERE p.usuario.id = :usuarioId")
+    GastoMedioUsuarioProjection findValorGastoMedioPorUsuarioId(@Param("usuarioId") UUID usuarioId);
+
     @Query("SELECT p.status AS status FROM Pedido p WHERE p.id = :id")
     Optional<PedidoStatusProjection> findStatusById(@Param("id") UUID id);
 
@@ -39,5 +45,4 @@ public interface PedidoRepository extends BaseRepository<Pedido, UUID> {
     Page<FaturamentoProjection> findByFaturamentoMensal(@Param("mesReferencia") int mesReferencia,
                                                         @Param("anoReferencia") int anoReferencia,
                                                         Pageable pageable);
-
 }

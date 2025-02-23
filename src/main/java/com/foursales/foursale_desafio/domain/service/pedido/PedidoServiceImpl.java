@@ -2,19 +2,19 @@ package com.foursales.foursale_desafio.domain.service.pedido;
 
 import com.foursales.foursale_desafio.domain.core.domain.ResponsePage;
 import com.foursales.foursale_desafio.domain.core.domain.service.BaseServiceImpl;
+import com.foursales.foursale_desafio.domain.core.utils.SecurityContextUtils;
 import com.foursales.foursale_desafio.domain.mapper.dto.PedidoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoPedidoDto;
+import com.foursales.foursale_desafio.domain.mapper.dto.UsuarioDto;
 import com.foursales.foursale_desafio.domain.mapper.pedido.PedidoMapper;
 import com.foursales.foursale_desafio.domain.model.pedido.Pedido;
 import com.foursales.foursale_desafio.domain.model.pedido.Status;
-import com.foursales.foursale_desafio.domain.model.usuario.Usuario;
 import com.foursales.foursale_desafio.domain.repository.PedidoRepository;
 import com.foursales.foursale_desafio.domain.repository.projection.FaturamentoProjection;
 import com.foursales.foursale_desafio.domain.repository.projection.GastoMedioUsuarioProjection;
 import com.foursales.foursale_desafio.domain.service.produto.ProdutoService;
 import com.foursales.foursale_desafio.domain.service.produtopedido.ProdutoPedidoService;
-import com.foursales.foursale_desafio.domain.service.usuario.UsuarioService;
 import com.foursales.foursale_desafio.exception.DeletarRegistroException;
 import com.foursales.foursale_desafio.exception.ProdutoSemEstoqueException;
 import com.foursales.foursale_desafio.exception.RegistroNaoEncontradoException;
@@ -34,42 +34,25 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, UUID, PedidoRepos
     private final PedidoMapper pedidoMapper;
     private final ProdutoService produtoService;
     private final ProdutoPedidoService produtoPedidoService;
-    private final UsuarioService usuarioService;
 
     protected PedidoServiceImpl(PedidoRepository repo,
                                 PedidoMapper pedidoMapper,
                                 ProdutoService produtoService,
-                                ProdutoPedidoService produtoPedidoService,
-                                UsuarioService usuarioService) {
+                                ProdutoPedidoService produtoPedidoService) {
         super(repo);
         this.pedidoMapper = pedidoMapper;
         this.produtoService = produtoService;
         this.produtoPedidoService = produtoPedidoService;
-        this.usuarioService = usuarioService;
     }
 
     //TODO
-    public PedidoDto criar(PedidoDto pedidoDto, UUID usuarioId) {
-        List<ProdutoPedidoDto> produtosPedidos = pedidoDto.getProdutosPedidos();
-        pedidoDto.setUsuario(Usuario.builder().id(usuarioId).build());
-        pedidoDto = pedidoMapper.toDto(salvar(pedidoMapper.toEntity(pedidoDto)));
-        for (ProdutoPedidoDto produtoPedidoDto : produtosPedidos) {
-            if (!produtoService.hasEstoqueDisponivel(produtoPedidoDto.getProdutoId(), produtoPedidoDto.getQuantidade())) {
-                pedidoDto = atualizarStatus(pedidoDto.getId(), Status.CANCELADO_AUTOMATICAMENTE);
-            }
-            calcularValorTotal(pedidoDto, produtoPedidoDto);
-            produtoPedidoDto.setPedido(pedidoDto);
-            produtoPedidoService.criar(produtoPedidoDto);
-        }
-
-        return pedidoDto;
-    }
-
     public PedidoDto criar(PedidoDto pedidoDto) {
         List<ProdutoPedidoDto> produtosPedidos = pedidoDto.getProdutosPedidos();
+        pedidoDto.setUsuario(UsuarioDto.builder().id(SecurityContextUtils.getId()).build());
         pedidoDto = pedidoMapper.toDto(salvar(pedidoMapper.toEntity(pedidoDto)));
         for (ProdutoPedidoDto produtoPedidoDto : produtosPedidos) {
             if (!produtoService.hasEstoqueDisponivel(produtoPedidoDto.getProdutoId(), produtoPedidoDto.getQuantidade())) {
+                produtoPedidoDto.setEstoqueDisponivel(Boolean.FALSE);
                 pedidoDto = atualizarStatus(pedidoDto.getId(), Status.CANCELADO_AUTOMATICAMENTE);
             }
             calcularValorTotal(pedidoDto, produtoPedidoDto);
@@ -90,7 +73,7 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, UUID, PedidoRepos
 
     public PedidoDto buscaPorId(UUID id) {
         Pedido pedido = buscarPorId(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException(id, PedidoDto.class.getName()));
+                .orElseThrow(() -> new RegistroNaoEncontradoException(id, "Pedido"));
         return pedidoMapper.toDto(pedido);
     }
 
@@ -143,6 +126,11 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, UUID, PedidoRepos
     }
 
     @Override
+    public GastoMedioUsuarioProjection getValorGastoMedioPorUsuarioId(UUID usuarioId) {
+        return repo.findValorGastoMedioPorUsuarioId(usuarioId);
+    }
+
+    @Override
     public Boolean isDisponivelParaPagamento(UUID id) {
         int numeroPagina = 0;
         int pageSize = 10;
@@ -167,14 +155,14 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, UUID, PedidoRepos
 
     private Status getStatus(UUID id) {
         return repo.findStatusById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException(id, PedidoDto.class.getName()))
+                .orElseThrow(() -> new RegistroNaoEncontradoException(id, "Pedido"))
                 .getStatus();
     }
 
     public void removerProduto(List<UUID> produtosPedidosId) {
         try {
-            produtosPedidosId.forEach(this::deletar);
-        } catch (DeletarRegistroException e) {
+            produtosPedidosId.forEach(produtoPedidoService::deletarPorId);
+        } catch (Exception e) {
             throw new DeletarRegistroException("Erro em deletar produtos com os ids %s", produtosPedidosId);
         }
     }
@@ -183,10 +171,5 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, UUID, PedidoRepos
                                                                        int anoReferencia,
                                                                        Pageable pageable) {
         return mapearPageSimples(repo.findByFaturamentoMensal(mesReferencia, anoReferencia, pageable));
-    }
-
-    public void atualizarComprasDeUsuarioPorCompraId(UUID pedidoId, int quantidadeDeItensComprados) {
-        PedidoDto pedido = buscaPorId(pedidoId);
-        usuarioService.atualizarTotalDeCompra(pedido.getUsuarioId(), quantidadeDeItensComprados);
     }
 }

@@ -30,6 +30,7 @@ public class ProdutoPedidoServiceImpl extends BaseServiceImpl<ProdutoPedido, UUI
     }
 
     public ProdutoPedidoDto criar(ProdutoPedidoDto produtoPedidoDto) {
+        produtoPedidoDto.setProduto(produtoService.buscaPorId(produtoPedidoDto.getProdutoId()));
         return produtoPedidoMapper.toDto(salvar(produtoPedidoMapper.toEntity(produtoPedidoDto)));
     }
 
@@ -44,7 +45,7 @@ public class ProdutoPedidoServiceImpl extends BaseServiceImpl<ProdutoPedido, UUI
 
     public ProdutoPedidoDto buscaPorId(UUID id) {
         ProdutoPedido produtoPedido = buscarPorId(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException(id, ProdutoPedidoDto.class.getName()));
+                .orElseThrow(() -> new RegistroNaoEncontradoException(id, "Produto pedido"));
         return produtoPedidoMapper.toDto(produtoPedido);
     }
 
@@ -53,7 +54,7 @@ public class ProdutoPedidoServiceImpl extends BaseServiceImpl<ProdutoPedido, UUI
             produtoPedidoDto.setId(produtoPedido.getId());
             ProdutoPedido produtoPedidoAtualizado = salvar(produtoPedidoMapper.toEntity(produtoPedidoDto));
             return produtoPedidoMapper.toDto(produtoPedidoAtualizado);
-        }).orElseThrow(() -> new RegistroNaoEncontradoException(id, ProdutoPedidoDto.class.getName()));
+        }).orElseThrow(() -> new RegistroNaoEncontradoException(id, "Produto pedido"));
     }
 
     @Override
@@ -79,5 +80,10 @@ public class ProdutoPedidoServiceImpl extends BaseServiceImpl<ProdutoPedido, UUI
         } while (hasMaisPaginas);
 
         return quantidadeDeItensComprados;
+    }
+
+    @Override
+    public void deletarPorId(UUID id) {
+        deletar(id);
     }
 }

@@ -2,12 +2,15 @@ package com.foursales.foursale_desafio.domain.service.pedido;
 
 import com.foursales.foursale_desafio.FoursaleDesafioApplicationTests;
 import com.foursales.foursale_desafio.domain.MockFactory;
+import com.foursales.foursale_desafio.domain.config.WithMockUserCustom;
 import com.foursales.foursale_desafio.domain.core.domain.ResponsePage;
+import com.foursales.foursale_desafio.domain.core.security.Perfil;
 import com.foursales.foursale_desafio.domain.mapper.dto.PedidoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoPedidoDto;
 import com.foursales.foursale_desafio.domain.mapper.produto.ProdutoMapper;
 import com.foursales.foursale_desafio.domain.mapper.produto.ProdutoPedidoMapper;
+import com.foursales.foursale_desafio.domain.mapper.usuario.UsuarioMapper;
 import com.foursales.foursale_desafio.domain.model.pedido.Status;
 import com.foursales.foursale_desafio.domain.model.produto.Produto;
 import com.foursales.foursale_desafio.domain.model.produto.ProdutoPedido;
@@ -59,6 +62,9 @@ class PedidoServiceImplTest extends FoursaleDesafioApplicationTests {
     @Autowired
     private ProdutoPedidoMapper produtoPedidoMapper;
 
+    @Autowired
+    private UsuarioMapper usuarioMapper;
+
     @Nested
     class Dado_um_pedido extends FoursaleDesafioApplicationTests {
         private PedidoDto pedidoDto;
@@ -79,7 +85,7 @@ class PedidoServiceImplTest extends FoursaleDesafioApplicationTests {
 
                 pedidoDto = PedidoDto.builder()
                         .produtosPedidos(List.of(produtoPedidoDto))
-                        .usuario(usuarioService.salvar(mockFactory.construirUsuario()))
+                        .usuario(usuarioMapper.toDto(usuarioService.salvar(mockFactory.construirUsuario())))
                         .build();
                 pedidoCriado = pedidoService.criar(pedidoDto);
                 produtosPedidos = produtoPedidoService.listarPaginadoPorPedidoId(pedidoCriado.getId(), PageRequest.of(0, 1));
@@ -106,7 +112,7 @@ class PedidoServiceImplTest extends FoursaleDesafioApplicationTests {
 
                 pedidoDto = PedidoDto.builder()
                         .produtosPedidos(List.of(produtoPedidoDto))
-                        .usuario(usuarioService.salvar(mockFactory.construirUsuario()))
+                        .usuario(usuarioMapper.toDto(usuarioService.salvar(mockFactory.construirUsuario())))
                         .build();
                 pedidoCriado = pedidoService.criar(pedidoDto);
             }
@@ -135,7 +141,7 @@ class PedidoServiceImplTest extends FoursaleDesafioApplicationTests {
 
                 pedidoDto = PedidoDto.builder()
                         .produtosPedidos(List.of(produtoPedidoDto))
-                        .usuario(usuarioService.salvar(mockFactory.construirUsuario()))
+                        .usuario(usuarioMapper.toDto(usuarioService.salvar(mockFactory.construirUsuario())))
                         .build();
                 pedidoCriado = pedidoService.criar(pedidoDto);
             }
@@ -165,6 +171,8 @@ class PedidoServiceImplTest extends FoursaleDesafioApplicationTests {
                 }
 
                 @Test
+
+                @WithMockUserCustom(email = "galasdalas51@gmail.com", perfil = Perfil.ROLE_ADMIN)
                 void Entao_deve_listar_com_sucesso() {
                     assertEquals(1L, pedidosPorUsuario.getTotalElements());
                     assertEquals(pedidoCriado.getUsuarioId(), pedidosPorUsuario.getContent().get(0).getUsuarioId());

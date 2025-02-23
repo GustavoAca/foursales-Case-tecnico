@@ -77,7 +77,7 @@ class PedidoMapperTest extends FoursaleDesafioApplicationTests {
                 assertNotNull(pedido.getStatus());
                 assertNotNull(pedido.getValorTotal());
                 assertEquals(pedidoDto.getId(), pedido.getId());
-                assertEquals(pedidoDto.getUsuario().getId(), pedido.getUsuario().getId());
+                assertEquals(pedidoDto.getUsuarioId(), pedido.getUsuario().getId());
                 assertEquals(pedidoDto.getStatus(), pedido.getStatus());
                 assertEquals(pedidoDto.getValorTotal(), pedido.getValorTotal());
             }

@@ -14,9 +14,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PedidoService extends BaseService<Pedido, UUID> {
-    PedidoDto criar(PedidoDto pedidoDto);
 
-    PedidoDto criar(PedidoDto pedidoDto, UUID id);
+    PedidoDto criar(PedidoDto pedidoDto);
 
     ResponsePage<PedidoDto> listarPaginado(Pageable pageable);
 
@@ -32,6 +31,8 @@ public interface PedidoService extends BaseService<Pedido, UUID> {
 
     ResponsePage<GastoMedioUsuarioProjection> getValorGastoMedioPorUsuario(Pageable pageable);
 
+    GastoMedioUsuarioProjection getValorGastoMedioPorUsuarioId(UUID usuarioId);
+
     Boolean isDisponivelParaPagamento(UUID id);
 
     void removerProduto(List<UUID> produtosPedidosId);
@@ -40,5 +41,4 @@ public interface PedidoService extends BaseService<Pedido, UUID> {
                                                                 int anoReferencia,
                                                                 Pageable pageable);
 
-    void atualizarComprasDeUsuarioPorCompraId(UUID pedidoId, int quantidadeDeItensComprados);
 }

@@ -21,10 +21,10 @@ import java.util.UUID;
 public class Pagamento extends EntityAbstract {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID pedidoId;
 
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 }

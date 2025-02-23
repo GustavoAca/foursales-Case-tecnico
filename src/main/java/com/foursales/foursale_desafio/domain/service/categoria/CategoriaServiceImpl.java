@@ -35,7 +35,7 @@ public class CategoriaServiceImpl extends BaseServiceImpl<Categoria, UUID, Categ
     @Override
     public CategoriaDto buscaPorId(UUID id) {
         Categoria categoria = buscarPorId(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException(id, CategoriaDto.class.getName()));
+                .orElseThrow(() -> new RegistroNaoEncontradoException(id, "Categoria"));
         return categoriaMapper.toDto(categoria);
     }
 
@@ -44,7 +44,7 @@ public class CategoriaServiceImpl extends BaseServiceImpl<Categoria, UUID, Categ
         return buscarPorId(id).map(categoria -> {
             categoriaDto.setId(categoria.getId());
             Categoria categoriaAtualizada = salvar(categoriaMapper.toEntity(categoriaDto));
-            return categoriaMapper.toDto(categoria);
-        }).orElseThrow(() -> new RegistroNaoEncontradoException(id, CategoriaDto.class.getName()));
+            return categoriaMapper.toDto(categoriaAtualizada);
+        }).orElseThrow(() -> new RegistroNaoEncontradoException(id, "Categoria"));
     }
 }

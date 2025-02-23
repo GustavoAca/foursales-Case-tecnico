@@ -78,12 +78,13 @@ CREATE INDEX idx_pedidos_usuario_id_valor_total ON pedidos(usuario_id, valor_tot
 CREATE INDEX idx_pedidos_data_de_criacao_valor_total ON pedidos(data_de_criacao, valor_total);
 
 create table pagamentos (
+  id binary(16) not null,
   pedido_id binary(16) not null,
   data_de_criacao timestamp null default current_timestamp,
   data_de_modificacao timestamp null default current_timestamp on update current_timestamp,
   criado_por varchar(100) null,
   modificado_por varchar(100) null,
-  primary key (pedido_id),
+  primary key (id),
   foreign key (pedido_id) references pedidos(id)
 );
 

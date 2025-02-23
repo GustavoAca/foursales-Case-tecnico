@@ -1,6 +1,7 @@
 spring:
   application:
     name: foursales
+    version: @project.version@
   jackson:
     time-zone: America/Sao_Paulo
   jpa:
@@ -24,6 +25,22 @@ management:
     web:
       exposure:
         include: "*"
+jwt:
+  public:
+    key: |
+      -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvDs+NrXxFOsKw8MBF+PG
+      2zyYXaMSgtOVK9bJ8EDqc04EhHFNaxAsh82R+Cq7Iu8snYUIDlIYO8GAJm2a1VdJ
+      OyUuVCHpFCujilCcxLSqeuIh5/Io1IGQ5xKhrxjhx+mozGiyuuMVC8QEEJzOyiAa
+      UQmGk4l5l4PyGZOTZNg+gZaOSZMLRXheyyL1Gm5hIK95XfRUdoqPbluUWDttQYaS
+      1XfjpP2Oo6SOhBXRsw28ICnhijKbogK3aAR2UutVeY+WZnJwYMZWvFAX5se1oa1C
+      RWuAY12Ja1wBORW79gyOwYgf3bbuLr2kVVN6mlmjzWElyk4ElaC3FA1NxMT8Glz+
+      6QIDAQAB
+      -----END PUBLIC KEY-----
+
+
+  private:
+    key: classpath:private.key
 ---
 spring:
   config:
