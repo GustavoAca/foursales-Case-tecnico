@@ -81,9 +81,4 @@ public class ProdutoPedidoServiceImpl extends BaseServiceImpl<ProdutoPedido, UUI
 
         return quantidadeDeItensComprados;
     }
-
-    @Override
-    public void deletarPorId(UUID id) {
-        deletar(id);
-    }
 }

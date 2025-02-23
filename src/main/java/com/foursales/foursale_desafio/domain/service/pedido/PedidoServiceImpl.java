@@ -161,7 +161,7 @@ public class PedidoServiceImpl extends BaseServiceImpl<Pedido, UUID, PedidoRepos
 
     public void removerProduto(List<UUID> produtosPedidosId) {
         try {
-            produtosPedidosId.forEach(produtoPedidoService::deletarPorId);
+            produtosPedidosId.forEach(produtoPedidoService::deletar);
         } catch (Exception e) {
             throw new DeletarRegistroException("Erro em deletar produtos com os ids %s", produtosPedidosId);
         }

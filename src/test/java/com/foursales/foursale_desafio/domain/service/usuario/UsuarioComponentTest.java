@@ -47,5 +47,4 @@ class UsuarioComponentTest extends FoursaleDesafioApplicationTests {
             }
         }
     }
-
 }

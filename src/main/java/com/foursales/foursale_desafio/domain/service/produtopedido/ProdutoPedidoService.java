@@ -21,6 +21,4 @@ public interface ProdutoPedidoService extends BaseService<ProdutoPedido, UUID> {
     ProdutoPedidoDto atualizar(UUID id, ProdutoPedidoDto produtoDto);
 
     int atualizarEstoque(UUID pedidoId);
-
-    void deletarPorId(UUID id);
 }

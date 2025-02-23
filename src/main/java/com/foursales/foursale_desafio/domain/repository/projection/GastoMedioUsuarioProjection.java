@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public interface GastoMedioUsuarioProjection {
 
-    public BigDecimal getMediaDeGasto();
+    BigDecimal getMediaDeGasto();
 
-    public UUID getUsuarioId();
+    UUID getUsuarioId();
 }
 
