@@ -16,6 +16,10 @@ spring:
     locations: classpath:db/migration
     table: FLYWAY_SCHEMA_HISTORY
     schemas: foursales
+  datasource:
+    url: jdbc:mysql://localhost:3306/foursales?TimeZone=America/Sao_Paulo
+    username: foursales
+    password: 1234
 
 server:
   port: 8080
@@ -41,28 +45,3 @@ jwt:
 
   private:
     key: classpath:private.key
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-  datasource:
-    url: jdbc:mysql://localhost:3306/foursales?TimeZone=America/Sao_Paulo
-    username: foursales
-    password: 1234
-#    driver-class-name: org.hibernate.dialect.MySQLDialect
-
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-  datasource:
-    url: ${DB_URL}
-    username: ${USER_DB}
-    password: ${PASSWORD_DB}
-  flyway:
-    user: ${USER_DB}
-    password: ${PASSWORD_DB}
-server:
-  port: ${PORT}
