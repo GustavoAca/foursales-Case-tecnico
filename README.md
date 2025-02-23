@@ -1,16 +1,16 @@
 # Desafio Técnico - Desenvolvedor Pleno
 
-## Passo a passo para execução de
+## Passo a passo para execução
 
-## Dump banco de dados
+### Dump banco de dados
 
 O arquivo se encontra na pasta `docker`
 
-## Execução de endpoints
+### Execução de endpoints
 
 Decidi criar a estrutura pelo postman e compartilhar os endpoints, environments estão na pasta `enviroments_postman`
 
-## Modo de exportação
+### Modo de exportação
 
 Clique em importar
 ![img.png](imagens/img-importar.png)
@@ -18,9 +18,9 @@ Clique em importar
 Selecione arquivo
 ![img.png](imagens/selecionar-arquivo.png)
 
-## Modo de execução do projeto
+### Modo de execução do projeto
 
-### Docker
+#### Docker
 
 Optando por utilizar o docker, basta entrar no arquivo `docker/docker-compose.yml` e executar o container da imagem do
 mysql com o comando abaixo:
@@ -31,8 +31,7 @@ docker compose up -d mysql
 
 Com isso, temos a conexão do banco disponivel, então iremos executar o projeto
 
-### Intelij
-
+#### Intelij
 <br/>
 
 Configuration
@@ -45,3 +44,5 @@ Criando application
 
 Configurando application e executando
 ![img.png](img.png)
+
+Assim deve iniciar o projeto corretamente
