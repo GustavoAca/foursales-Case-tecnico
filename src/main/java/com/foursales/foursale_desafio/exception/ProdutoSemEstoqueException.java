@@ -29,6 +29,6 @@ public class ProdutoSemEstoqueException extends FoursalesException {
         for (String produto : produtosSemEstoque) {
             joiner.add(produto);
         }
-        return String.format(MENSAGEM, joiner.toString());
+        return String.format(MENSAGEM, joiner);
     }
 }

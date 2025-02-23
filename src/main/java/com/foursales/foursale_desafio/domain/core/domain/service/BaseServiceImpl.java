@@ -58,5 +58,4 @@ public class BaseServiceImpl<E extends EntityAbstract, K extends Serializable, R
     public <T> ResponsePage<T> mapearPageSimples(Page<T> page) {
         return new ResponsePage<>(page.getContent(), page.getNumber(), page.getSize(), page.getTotalElements());
     }
-
 }

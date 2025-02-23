@@ -17,4 +17,6 @@ public interface ProdutoService extends BaseService<Produto, UUID> {
     ProdutoDto buscaPorId(UUID id);
 
     ProdutoDto atualizar(UUID id, ProdutoDto produtoDto);
+
+    Boolean hasEstoqueDisponivel(UUID id, Integer quantidadeDesejada);
 }

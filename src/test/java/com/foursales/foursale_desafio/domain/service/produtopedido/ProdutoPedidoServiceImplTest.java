@@ -80,7 +80,9 @@ class ProdutoPedidoServiceImplTest extends FoursaleDesafioApplicationTests {
         produtoPedido.getPedido().getUsuario().setId(null);
         produtoPedido.getPedido().setUsuario(usuarioService.salvar(produtoPedido.getPedido().getUsuario()));
         produtoPedido.setPedido(pedidoService.salvar(produtoPedido.getPedido()));
+        produtoPedido.getProduto().getSubcategoria().getCategoria().setId(null);
         produtoPedido.getProduto().getSubcategoria().setCategoria(categoriaService.salvar(produtoPedido.getProduto().getSubcategoria().getCategoria()));
+        produtoPedido.getProduto().getSubcategoria().setId(null);
         produtoPedido.getProduto().setSubcategoria(subcategoriaService.salvar(produtoPedido.getProduto().getSubcategoria()));
         produtoPedido.setProduto(produtoService.salvar(produtoPedido.getProduto()));
         return produtoPedido;

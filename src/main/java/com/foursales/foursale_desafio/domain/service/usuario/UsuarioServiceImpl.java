@@ -6,6 +6,7 @@ import com.foursales.foursale_desafio.domain.core.domain.service.BaseServiceImpl
 import com.foursales.foursale_desafio.domain.model.usuario.Usuario;
 import com.foursales.foursale_desafio.domain.repository.UsuarioRepository;
 import com.foursales.foursale_desafio.exception.RegistroJaCadastradoException;
+import com.foursales.foursale_desafio.exception.RegistroNaoEncontradoException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UUID, UsuarioRe
     public void cadastrarUsuario(UsuarioDeCriacaoDto usuarioDeCriacaoDto) {
         Optional<Usuario> usuario = repo.findByEmail(usuarioDeCriacaoDto.email());
 
-        if(usuario.isPresent()){
+        if (usuario.isPresent()) {
             throw new RegistroJaCadastradoException(String
                     .format("Usuario %s existente", usuarioDeCriacaoDto.email()));
         }
@@ -38,6 +39,14 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UUID, UsuarioRe
 
     @Override
     public ResponsePage<Usuario> getMaioresCompradores(Pageable pageable) {
-        return repo.findAllByOrderByTotalDeComprasRealizadasDesc(pageable);
+        return mapearPageSimples(repo.findAllByOrderByTotalDeComprasRealizadasDesc(pageable));
+    }
+
+    @Override
+    public void atualizarTotalDeCompra(UUID usuarioId, int comprasRealizadas) {
+        Usuario usuario = buscarPorId(usuarioId)
+                .orElseThrow(() -> new RegistroNaoEncontradoException(usuarioId, Usuario.class.getName()));
+        usuario.setTotalDeComprasRealizadas(usuario.getTotalDeComprasRealizadas() + comprasRealizadas);
+        salvar(usuario);
     }
 }

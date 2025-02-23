@@ -4,8 +4,10 @@ import com.foursales.foursale_desafio.domain.core.domain.ResponsePage;
 import com.foursales.foursale_desafio.domain.core.domain.service.BaseService;
 import com.foursales.foursale_desafio.domain.mapper.dto.PedidoDto;
 import com.foursales.foursale_desafio.domain.mapper.dto.ProdutoPedidoDto;
-import com.foursales.foursale_desafio.domain.model.pedido.GastoMedioUsuario;
 import com.foursales.foursale_desafio.domain.model.pedido.Pedido;
+import com.foursales.foursale_desafio.domain.model.pedido.Status;
+import com.foursales.foursale_desafio.domain.repository.projection.FaturamentoProjection;
+import com.foursales.foursale_desafio.domain.repository.projection.GastoMedioUsuarioProjection;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.UUID;
 
 public interface PedidoService extends BaseService<Pedido, UUID> {
     PedidoDto criar(PedidoDto pedidoDto);
+
+    PedidoDto criar(PedidoDto pedidoDto, UUID id);
 
     ResponsePage<PedidoDto> listarPaginado(Pageable pageable);
 
@@ -22,11 +26,19 @@ public interface PedidoService extends BaseService<Pedido, UUID> {
 
     PedidoDto atualizar(UUID id, PedidoDto pedidoDto);
 
-    Boolean isTodosProdutosPedidosTemEstoque(UUID id);
+    void adicionarProduto(List<ProdutoPedidoDto> produtoPedidoDtos, UUID id);
 
-    PedidoDto adicionarProduto(List<ProdutoPedidoDto> produtoPedidoDtos, UUID id);
+    PedidoDto atualizarStatus(UUID id, Status status);
 
-    void atualizarStatus(UUID id);
+    ResponsePage<GastoMedioUsuarioProjection> getValorGastoMedioPorUsuario(Pageable pageable);
 
-    ResponsePage<GastoMedioUsuario> getValorGastoMedioPorUsuario(Pageable pageable);
+    Boolean isDisponivelParaPagamento(UUID id);
+
+    void removerProduto(List<UUID> produtosPedidosId);
+
+    ResponsePage<FaturamentoProjection> getFaturamentoPorPerido(int mesReferencia,
+                                                                int anoReferencia,
+                                                                Pageable pageable);
+
+    void atualizarComprasDeUsuarioPorCompraId(UUID pedidoId, int quantidadeDeItensComprados);
 }

@@ -12,4 +12,6 @@ public interface UsuarioService extends BaseService<Usuario, UUID> {
     void cadastrarUsuario(UsuarioDeCriacaoDto usuarioDeCriacaoDto);
 
     ResponsePage<Usuario> getMaioresCompradores(Pageable pageable);
+
+    void atualizarTotalDeCompra(UUID usuarioId, int comprasRealizadas);
 }

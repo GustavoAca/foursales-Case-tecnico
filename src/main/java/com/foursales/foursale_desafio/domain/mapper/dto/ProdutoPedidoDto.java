@@ -20,4 +20,9 @@ public class ProdutoPedidoDto extends DtoAbstract {
     private Integer quantidade;
     @Builder.Default
     private BigDecimal preco = BigDecimal.ZERO;
+    private Boolean estoqueDisponivel;
+
+    public UUID getProdutoId() {
+        return this.produto.getId();
+    }
 }

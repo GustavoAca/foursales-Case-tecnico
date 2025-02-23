@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "produto_pedido")
+@Table(name = "produtos_pedidos")
 @Entity
 public class ProdutoPedido extends EntityAbstract {
 
@@ -34,4 +34,7 @@ public class ProdutoPedido extends EntityAbstract {
 
     @Builder.Default
     private BigDecimal preco = BigDecimal.ZERO;
+
+    @Column(name = "estoque_disponivel")
+    private Boolean estoqueDisponivel;
 }

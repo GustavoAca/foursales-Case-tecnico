@@ -13,6 +13,10 @@ public class PedidoMapper {
                 .valorTotal(pedidoDto.getValorTotal())
                 .status(pedidoDto.getStatus())
                 .usuario(pedidoDto.getUsuario())
+                .criadoPor(pedidoDto.getCriadoPor())
+                .dataDeCriacao(pedidoDto.getDataDeCriacao())
+                .modificadoPor(pedidoDto.getModificadoPor())
+                .dataDeModificacao(pedidoDto.getDataDeModificacao())
                 .build();
     }
 
@@ -22,6 +26,10 @@ public class PedidoMapper {
                 .valorTotal(pedido.getValorTotal())
                 .status(pedido.getStatus())
                 .usuario(pedido.getUsuario())
+                .criadoPor(pedido.getCriadoPor())
+                .dataDeCriacao(pedido.getDataDeCriacao())
+                .modificadoPor(pedido.getModificadoPor())
+                .dataDeModificacao(pedido.getDataDeModificacao())
                 .build();
     }
 }

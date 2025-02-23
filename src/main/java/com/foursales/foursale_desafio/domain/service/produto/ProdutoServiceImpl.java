@@ -44,4 +44,9 @@ public class ProdutoServiceImpl extends BaseServiceImpl<Produto, UUID, ProdutoRe
             return produtoMapper.toDto(produtoAtualizado);
         }).orElseThrow(() -> new RegistroNaoEncontradoException(id, ProdutoDto.class.getName()));
     }
+
+    @Override
+    public Boolean hasEstoqueDisponivel(UUID id, Integer quantidadeDesejada) {
+        return repo.hasEstoqueDisponivel(id, quantidadeDesejada);
+    }
 }
