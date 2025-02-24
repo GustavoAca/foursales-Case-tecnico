@@ -46,3 +46,19 @@ Configurando application e executando
 ![img.png](img.png)
 
 Assim deve iniciar o projeto corretamente
+
+## Usuarios cadastrados
+
+ADMIN -
+
+``` 
+email: galasdalas1@gmail.com
+senha: 1234
+```
+
+USER -
+
+``` 
+email: galasdalas2@gmail.com
+senha: 1234
+```

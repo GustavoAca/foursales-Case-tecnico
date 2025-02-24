@@ -44,7 +44,7 @@ CREATE TABLE `FLYWAY_SCHEMA_HISTORY` (
 
 LOCK TABLES `FLYWAY_SCHEMA_HISTORY` WRITE;
 /*!40000 ALTER TABLE `FLYWAY_SCHEMA_HISTORY` DISABLE KEYS */;
-INSERT INTO `FLYWAY_SCHEMA_HISTORY` VALUES (1,'1.1.0.0','script inicial','SQL','comum/V1_1_0_0__script_inicial.sql',-1161630986,'foursales','2025-02-23 16:04:21',714,1),(2,'1.1.0.1','insert inicial','SQL','mysql/V1_1_0_1__insert_inicial.sql',1577024205,'foursales','2025-02-23 16:04:21',6,1),(3,'1.1.0.2','criando usuario','SQL','comum/V1_1_0_2__criando_usuario.sql',0,'foursales','2025-02-23 16:04:21',2,1);
+INSERT INTO `FLYWAY_SCHEMA_HISTORY` VALUES (1,'1.1.0.0','script inicial','SQL','comum/V1_1_0_0__script_inicial.sql',425523230,'foursales','2025-02-24 12:56:04',531,1),(2,'1.1.0.1','insert inicial','SQL','mysql/V1_1_0_1__insert_inicial.sql',-270603862,'foursales','2025-02-24 12:58:13',15,1);
 /*!40000 ALTER TABLE `FLYWAY_SCHEMA_HISTORY` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,7 +73,7 @@ CREATE TABLE `categorias` (
 
 LOCK TABLES `categorias` WRITE;
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
-INSERT INTO `categorias` VALUES (_binary '*`}\ïŸï´ŒBG/›[','Categoria de casa e cozinha','Casa e Cozinha','2025-02-23 16:04:21','2025-02-23 16:04:21','FOURSALES','FOURSALES'),(_binary '*a\ïŸï´ŒBG/›[','Categoria de eletrÃ´nicos','EletrÃ´nicos','2025-02-23 16:04:21','2025-02-23 16:04:21','FOURSALES','FOURSALES'),(_binary ';K—\è\Ê\ÈFÖ±ÿ\ìXG\Ó\ó','Categoia focada em roupas','Roupas','2025-02-23 13:05:47','2025-02-23 13:05:47','galasdalas501@gmail.com','galasdalas501@gmail.com'),(_binary 'Àk+i\ïžï´ŒBG/›[','Categoria de moda e vestuÃ¡rio','Moda e VestuÃ¡rio','2025-02-23 16:04:21','2025-02-23 16:04:21','FOURSALES','FOURSALES');
+INSERT INTO `categorias` VALUES (_binary '*`}\ïŸï´ŒBG/›[','Categoria de casa e cozinha','Casa e Cozinha','2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES'),(_binary '*a\ïŸï´ŒBG/›[','Categoria de eletrÃ´nicos','EletrÃ´nicos','2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES'),(_binary 'Àk+i\ïžï´ŒBG/›[','Categoria de moda e vestuÃ¡rio','Moda e VestuÃ¡rio','2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES');
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +136,6 @@ CREATE TABLE `pedidos` (
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` VALUES (_binary '7(é¼©A€ds*E\á—',_binary '[8W>Q@\æ±?\nh\ô','CONFIRMADO',63.00,'2025-02-23 13:06:36','2025-02-23 13:35:32','galasdalas501@gmail.com','galasdalas501@gmail.com');
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +170,7 @@ CREATE TABLE `produtos` (
 
 LOCK TABLES `produtos` WRITE;
 /*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
-INSERT INTO `produtos` VALUES (_binary '\à\É}\ï§ï´ŒBG/›[',_binary '‹‰¾\ï¥ï´ŒBG/›[','Moto G54','Celular motorola moto G54, 256GB de armazenamento',1050.00,4,'2025-02-23 16:04:21','2025-02-23 13:52:55','FOURSALES','galasdalas501@gmail.com'),(_binary '\à\Ï\ï§ï´ŒBG/›[',_binary '‹‘\â\ï¥ï´ŒBG/›[','Cortina blackout','Cortina 1,20mx0,6m',10.00,10,'2025-02-23 16:04:21','2025-02-23 16:04:21','FOURSALES','FOURSALES'),(_binary '}\â%TA„½\Z½L¸r',_binary '4¸\ã\÷¸EU‹hŠÏ¨‡3„','Roupas Femininas','Subcategoia focada em roupas',10.00,10,'2025-02-23 13:06:18','2025-02-23 13:06:18','galasdalas501@gmail.com','galasdalas501@gmail.com');
+INSERT INTO `produtos` VALUES (_binary '\à\É}\ï§ï´ŒBG/›[',_binary '‹‰¾\ï¥ï´ŒBG/›[','Moto G54','Celular motorola moto G54, 256GB de armazenamento',1050.00,10,'2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES'),(_binary '\à\Ï\ï§ï´ŒBG/›[',_binary '‹‘\â\ï¥ï´ŒBG/›[','Cortina blackout','Cortina 1,20mx0,6m',10.00,10,'2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES');
 /*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +206,6 @@ CREATE TABLE `produtos_pedidos` (
 
 LOCK TABLES `produtos_pedidos` WRITE;
 /*!40000 ALTER TABLE `produtos_pedidos` DISABLE KEYS */;
-INSERT INTO `produtos_pedidos` VALUES (_binary 'Ã—¶]Í²K¶\âk\ë\ÐD3',_binary '\à\É}\ï§ï´ŒBG/›[',_binary '7(é¼©A€ds*E\á—',3,10.50,1,'2025-02-23 14:04:59','2025-02-23 14:04:59','galasdalas501@gmail.com','galasdalas501@gmail.com');
 /*!40000 ALTER TABLE `produtos_pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,7 +238,7 @@ CREATE TABLE `subcategorias` (
 
 LOCK TABLES `subcategorias` WRITE;
 /*!40000 ALTER TABLE `subcategorias` DISABLE KEYS */;
-INSERT INTO `subcategorias` VALUES (_binary '4¸\ã\÷¸EU‹hŠÏ¨‡3„',_binary ';K—\è\Ê\ÈFÖ±ÿ\ìXG\Ó\ó','Subcategoia focada em roupas','Roupas Femininas','2025-02-23 13:06:03','2025-02-23 13:06:03','galasdalas501@gmail.com','galasdalas501@gmail.com'),(_binary '‹‰¾\ï¥ï´ŒBG/›[',_binary '*`}\ïŸï´ŒBG/›[','Subcategoria de casa e cozinha, utensÃ­lios de cozinha','UtensÃ­lios de cozinha','2025-02-23 16:04:21','2025-02-23 16:04:21','FOURSALES','FOURSALES'),(_binary '‹‘\â\ï¥ï´ŒBG/›[',_binary '*`}\ïŸï´ŒBG/›[','Subcategoria de casa e cozinha, decoraÃ§Ã£o','DecoraÃ§Ã£o','2025-02-23 16:04:21','2025-02-23 16:04:21','FOURSALES','FOURSALES'),(_binary '‹“´\ï¥ï´ŒBG/›[',_binary '*a\ïŸï´ŒBG/›[','Subcategoria de eletronicos, smartphones','Smartphones','2025-02-23 16:04:21','2025-02-23 16:04:21','FOURSALES','FOURSALES'),(_binary '‹•\Z\ï¥ï´ŒBG/›[',_binary '*a\ïŸï´ŒBG/›[','Subcategoria de eletronicos, televisores','Televisores','2025-02-23 16:04:21','2025-02-23 16:04:21','FOURSALES','FOURSALES'),(_binary '‹–C\ï¥ï´ŒBG/›[',_binary 'Àk+i\ïžï´ŒBG/›[','Subcategoria de moda e vestuÃ¡rio','Roupas Masculinas','2025-02-23 16:04:21','2025-02-23 16:04:21','FOURSALES','FOURSALES'),(_binary '‹—m\ï¥ï´ŒBG/›[',_binary 'Àk+i\ïžï´ŒBG/›[','Subcategoria de moda e vestuÃ¡rio','Roupas Femininas','2025-02-23 16:04:21','2025-02-23 16:04:21','FOURSALES','FOURSALES');
+INSERT INTO `subcategorias` VALUES (_binary '‹‰¾\ï¥ï´ŒBG/›[',_binary '*`}\ïŸï´ŒBG/›[','Subcategoria de casa e cozinha, utensÃ­lios de cozinha','UtensÃ­lios de cozinha','2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES'),(_binary '‹‘\â\ï¥ï´ŒBG/›[',_binary '*`}\ïŸï´ŒBG/›[','Subcategoria de casa e cozinha, decoraÃ§Ã£o','DecoraÃ§Ã£o','2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES'),(_binary '‹“´\ï¥ï´ŒBG/›[',_binary '*a\ïŸï´ŒBG/›[','Subcategoria de eletronicos, smartphones','Smartphones','2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES'),(_binary '‹•\Z\ï¥ï´ŒBG/›[',_binary '*a\ïŸï´ŒBG/›[','Subcategoria de eletronicos, televisores','Televisores','2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES'),(_binary '‹–C\ï¥ï´ŒBG/›[',_binary 'Àk+i\ïžï´ŒBG/›[','Subcategoria de moda e vestuÃ¡rio','Roupas Masculinas','2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES'),(_binary '‹—m\ï¥ï´ŒBG/›[',_binary 'Àk+i\ïžï´ŒBG/›[','Subcategoria de moda e vestuÃ¡rio','Roupas Femininas','2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES');
 /*!40000 ALTER TABLE `subcategorias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +273,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (_binary '$E\Í\Ö\Ü)CX„\n`#}7','galasdalas1@gmail.com','$2a$10$dgtnHjBWoaATTyU2aFCkmuydyZo73Nf4dicFLkzo7f0BSUJzPAEKO','ROLE_USER','Gustavo User',0,'2025-02-23 14:27:16','2025-02-23 14:27:16','foursales','foursales'),(_binary '[8W>Q@\æ±?\nh\ô','galasdalas501@gmail.com','$2a$10$gACPrsCsY.7vnURkJplobOiDFDD9P2eDJDFSsWpGE2SkgM0GjFe/C','ROLE_ADMIN','Gustavo',4,'2025-02-23 13:05:12','2025-02-23 13:35:32','foursales','galasdalas501@gmail.com');
+INSERT INTO `usuarios` VALUES (_binary '\0£½»ÿˆH2¢a™È¦\ïW','galasdalas1@gmail.com','$2a$10$Pl335iY8.kFtoDzGZwNZvezyBKazOv0cjINrMBVWDcTjx3daXgglS','ROLE_ADMIN','Gustavo Admin',0,'2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES'),(_binary '\ÂK\ö+HÙ„©u¤\Ö\Ü<','galasdalas2@gmail.com','$2a$10$V8EOtbXPSVF7drEJhEXGi.bSK0DgZ/orlADNcTW.IVjiT2W5o.R12','ROLE_USER','Gustavo User',0,'2025-02-24 12:58:13','2025-02-24 12:58:13','FOURSALES','FOURSALES');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -288,4 +286,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-23 18:18:53
+-- Dump completed on 2025-02-24 12:58:42

@@ -9,12 +9,12 @@ create table IF NOT EXISTS usuarios (
   data_de_modificacao timestamp null default current_timestamp on update current_timestamp,
   criado_por varchar(100) null,
   modificado_por varchar(100) null,
-  primary key (id)
+  primary key (id),
+  unique key uq_usuario_email (email)
 );
 
-alter table usuarios add constraint uq_usuario_email unique (email);
-CREATE INDEX IF NOT EXISTS idx_usuarios_total_de_compras_realizadas ON usuarios(total_de_compras_realizadas);
-create INDEX IF NOT EXISTS idx_usuarios_email on usuarios(email);
+CREATE INDEX idx_usuarios_total_de_compras_realizadas ON usuarios(total_de_compras_realizadas);
+create INDEX idx_usuarios_email on usuarios(email);
 
 create table IF NOT EXISTS categorias (
   id binary(16) not null,
@@ -40,7 +40,7 @@ create table IF NOT EXISTS subcategorias (
   foreign key (categoria_id) references categorias(id)
 );
 
-create INDEX IF NOT EXISTS idx_sucategorias_categoria_id on subcategorias(id);
+create INDEX idx_sucategorias_categoria_id on subcategorias(id);
 
 create table IF NOT EXISTS produtos (
   id binary(16) not null,
@@ -57,7 +57,7 @@ create table IF NOT EXISTS produtos (
   foreign key (subcategoria_id) references subcategorias(id)
 );
 
-create INDEX IF NOT EXISTS idx_produtos_quantidade_em_estoque on produtos(quantidade_em_estoque);
+create INDEX idx_produtos_quantidade_em_estoque on produtos(quantidade_em_estoque);
 
 create table IF NOT EXISTS pedidos (
   id binary(16) not null,
@@ -72,9 +72,9 @@ create table IF NOT EXISTS pedidos (
   foreign key (usuario_id) references usuarios(id)
 );
 
-create INDEX IF NOT EXISTS idx_pedidos_usuario_id on pedidos(usuario_id);
-create INDEX IF NOT EXISTS idx_pedidos_usuario_id_valor_total on pedidos(usuario_id, valor_total);
-create INDEX IF NOT EXISTS idx_pedidos_data_de_criacao_valor_total on pedidos(data_de_criacao, valor_total);
+create INDEX idx_pedidos_usuario_id on pedidos(usuario_id);
+create INDEX idx_pedidos_usuario_id_valor_total on pedidos(usuario_id, valor_total);
+create INDEX idx_pedidos_data_de_criacao_valor_total on pedidos(data_de_criacao, valor_total);
 
 create table IF NOT EXISTS pagamentos (
   id binary(16) not null,
@@ -87,7 +87,7 @@ create table IF NOT EXISTS pagamentos (
   foreign key (pedido_id) references pedidos(id)
 );
 
-create INDEX IF NOT EXISTS idx_pagamentos_pedido_id on pagamentos(pedido_id);
+create INDEX idx_pagamentos_pedido_id on pagamentos(pedido_id);
 
 create table IF NOT EXISTS produtos_pedidos (
   id binary(16) not null,
@@ -105,5 +105,5 @@ create table IF NOT EXISTS produtos_pedidos (
   foreign key (pedido_id) references pedidos(id)
 );
 
-create INDEX IF NOT EXISTS idx_produtos_pedidos_pedido_id on produtos_pedidos(pedido_id);
-create INDEX IF NOT EXISTS idx_produtos_pedidos_produto_id on produtos_pedidos(produto_id);
+create INDEX idx_produtos_pedidos_pedido_id on produtos_pedidos(pedido_id);
+create INDEX idx_produtos_pedidos_produto_id on produtos_pedidos(produto_id);
